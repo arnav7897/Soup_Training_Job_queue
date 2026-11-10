@@ -9,7 +9,8 @@ exercise; simulated jobs stand in for real model training.
 > **Status: in development.** The API supports job creation, lookup, listing and
 > cancellation backed by Postgres. Eight workers execute simulated jobs with
 > leases, fenced completion and recovery. `GET /health` reports process liveness
-> only. Event relay, chaos testing and load-test guarantees remain in progress.
+> only. The outbox relay publishes Redis Stream events and status reads use a
+> version-checked cache. Chaos and load-test guarantees remain unverified.
 
 ## The problem
 
@@ -76,8 +77,9 @@ stateDiagram-v2
 | Testing | Jest | Unit, integration and planned failure tests |
 | Operations | Docker Compose, GitHub Actions | Local services and automated checks |
 
-Postgres backs the job API. Redis is configured in Compose; its application
-integration remains planned.
+Postgres backs the job API. Redis Streams provide worker wake-ups, with polling
+fallback; Redis also stores a version-checked cache. Status reads check the current
+Postgres version, including when a cached value exists.
 
 ## Run locally
 
@@ -112,6 +114,6 @@ Run `npm run typecheck`, `npm run lint`, and `npm test` after building. With Pos
 
 ## What's next
 
-The next milestones complete job API verification, event delivery and caching,
-observability, and reproducible failure testing. The goal is a queue whose behavior
+The next milestones complete job API verification, observability, and reproducible
+failure testing. The goal is a queue whose behavior
 under failure can be explained and measured, not just a happy-path demo.
