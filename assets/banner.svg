@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-labelledby="title desc">
+  <title id="title">Training Job Queue</title>
+  <desc id="desc">A reliable path from queued work to completed training jobs.</desc>
+  <rect width="1200" height="300" rx="24" fill="#101d33"/>
+  <circle cx="1030" cy="30" r="180" fill="#162b45"/>
+  <circle cx="1190" cy="280" r="170" fill="#1a3850"/>
+  <text x="70" y="112" fill="#65e2c2" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4">SOUP / BACKEND</text>
+  <text x="70" y="174" fill="#f4f8fc" font-family="Arial, sans-serif" font-size="52" font-weight="700">Training Job Queue</text>
+  <text x="72" y="218" fill="#b7c8d8" font-family="Arial, sans-serif" font-size="21">Reliable work, even when workers fail.</text>
+  <path d="M835 151h220" stroke="#62d8bf" stroke-width="5" stroke-linecap="round" stroke-dasharray="3 15"/>
+  <rect x="802" y="119" width="64" height="64" rx="16" fill="#213f52" stroke="#65e2c2" stroke-width="3"/>
+  <path d="M821 141h26m-26 11h26m-26 11h18" stroke="#65e2c2" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="953" cy="151" r="32" fill="#213f52" stroke="#65e2c2" stroke-width="3"/>
+  <path d="M940 151l9 9 18-20" fill="none" stroke="#65e2c2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="1051" y="119" width="64" height="64" rx="16" fill="#65e2c2"/>
+  <path d="M1069 151l9 9 19-21" fill="none" stroke="#101d33" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
