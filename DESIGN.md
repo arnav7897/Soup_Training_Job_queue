@@ -20,7 +20,7 @@ lost or delayed invalidation cannot make cached state authoritative. The stream
 and cache may be lost without losing jobs.
 
 `/health` is process liveness. `/metrics` uses Postgres to expose job counts,
-committed claims, rejected completions, recovered expired leases, unpublished
+committed claims, rejected heartbeats and completions, recovered expired leases, unpublished
 outbox count and the oldest unpublished event age. Counters added in phase 5
 start at zero on upgrade; claims are derived from execution records. Counter
 updates add database write contention. Metrics fail with 503 if Postgres is down.

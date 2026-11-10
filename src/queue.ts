@@ -34,17 +34,22 @@ export async function claim(pool: Pool, worker: string, leaseMs: number): Promis
 }
 
 export async function heartbeat(pool: Pool, job: Claim, worker: string, leaseMs: number): Promise<boolean> {
-  const result = await pool.query(`UPDATE jobs SET lease_expires_at=now()+$4 * interval '1 millisecond', updated_at=now(), version=version+1
-    WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>now()`,
-  [job.id, job.lease_epoch, worker, leaseMs]);
-  return result.rowCount === 1;
+  return transaction(pool, async client => {
+    await client.query('SELECT id FROM jobs WHERE id=$1 FOR UPDATE', [job.id]);
+    const result = await client.query(`UPDATE jobs SET lease_expires_at=clock_timestamp()+$4 * interval '1 millisecond', updated_at=clock_timestamp(), version=version+1
+      WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>clock_timestamp()`,
+    [job.id, job.lease_epoch, worker, leaseMs]);
+    if (!result.rowCount) await client.query("UPDATE queue_counters SET value=value+1 WHERE name='fence_rejections'");
+    return result.rowCount === 1;
+  });
 }
 
 export async function complete(pool: Pool, job: Claim, worker: string): Promise<boolean> {
   return transaction(pool, async client => {
+    await client.query('SELECT id FROM jobs WHERE id=$1 FOR UPDATE', [job.id]);
     const result = await client.query(`UPDATE jobs SET status='succeeded', version=version+1,
       lease_owner=NULL, lease_expires_at=NULL, updated_at=now(), finished_at=now()
-      WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>now()
+      WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>clock_timestamp()
       RETURNING id,status,version`, [job.id, job.lease_epoch, worker]);
     if (!result.rowCount) {
       await client.query("UPDATE queue_counters SET value=value+1 WHERE name='fence_rejections'");
