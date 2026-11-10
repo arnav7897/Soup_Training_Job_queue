@@ -1,0 +1,25 @@
+
+> training-job-queue@0.1.0 chaos:batch
+> node scripts/chaos-batch.cjs
+
+Starting full chaos run 1/10
+Finished seed 1: exit 0
+Starting full chaos run 2/10
+Finished seed 2: exit 0
+Starting full chaos run 3/10
+Finished seed 3: exit 0
+Starting full chaos run 4/10
+Finished seed 4: exit 0
+Starting full chaos run 5/10
+Finished seed 5: exit 0
+Starting full chaos run 6/10
+Finished seed 6: exit 0
+Starting full chaos run 7/10
+Finished seed 7: exit 0
+Starting full chaos run 8/10
+Finished seed 8: exit 0
+Starting full chaos run 9/10
+Finished seed 9: exit 0
+Starting full chaos run 10/10
+Finished seed 10: exit 0
+Evidence: /home/arnav/Documents/Soup/runs/batch-2026-11-10T12-08-56-204Z-f788d9
