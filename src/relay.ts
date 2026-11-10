@@ -2,6 +2,7 @@ import { setTimeout as sleep } from 'node:timers/promises';
 import { Pool } from 'pg';
 import { loadConfig } from './config';
 import { publishOne, redisClient } from './events';
+import { log, errorMessage } from './log';
 
 async function main() {
   const config = loadConfig(process.env);
@@ -13,8 +14,8 @@ async function main() {
   try {
     while (!stopping) {
       try { if (!await publishOne(pool, redis)) await sleep(500); }
-      catch (error) { console.error('relay failed', error); await sleep(1000); }
+      catch (error) { log('error', 'relay', 'publish_failed', { error: errorMessage(error) }); await sleep(1000); }
     }
   } finally { redis.disconnect(); await pool.end(); }
 }
-main().catch((error: unknown) => { console.error(error); process.exitCode = 1; });
+main().catch((error: unknown) => { log('error', 'relay', 'startup_failed', { error: errorMessage(error) }); process.exitCode = 1; });

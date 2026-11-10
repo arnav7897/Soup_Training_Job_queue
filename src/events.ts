@@ -1,6 +1,7 @@
 import Redis from 'ioredis';
 import { Pool } from 'pg';
 import { z } from 'zod';
+import { log } from './log';
 
 const eventSchema = z.object({ jobId: z.string().uuid(), status: z.enum(['queued','running','succeeded','failed','cancelled']), version: z.number().int().positive() }).strict();
 const invalidateScript = `
@@ -15,7 +16,7 @@ return 1`;
 
 export function redisClient(url: string): Redis {
   const redis = new Redis(url, { lazyConnect: true, enableOfflineQueue: false, maxRetriesPerRequest: 1, connectTimeout: 1000, commandTimeout: 1000, retryStrategy: () => 1000 });
-  redis.on('error', error => console.error('Redis:', error.message));
+  redis.on('error', error => log('error', 'redis', 'connection_error', { error: error.message }));
   return redis;
 }
 
