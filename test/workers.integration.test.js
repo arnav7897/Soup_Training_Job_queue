@@ -40,7 +40,7 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     expect(await complete(pool, running, 'cancel-worker')).toBe(false);
     expect((await pool.query('SELECT count(*)::int AS n FROM effects WHERE job_id=$1', [cancelId])).rows[0].n).toBe(0);
 
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 500; i++) {
       const raceId = await insert();
       const raceJob = await claim(pool, 'racer', 10000);
       const [finish, cancel] = await Promise.all([

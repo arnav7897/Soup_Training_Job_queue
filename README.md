@@ -7,8 +7,9 @@ through worker crashes, retries, and cancellation races. This project is a backe
 exercise; simulated jobs stand in for real model training.
 
 > **Status: in development.** The API supports job creation, lookup, listing and
-> cancellation backed by Postgres. `GET /health` reports process liveness only.
-> Workers, recovery, event relay and the guarantees below are not yet implemented.
+> cancellation backed by Postgres. Eight workers execute simulated jobs with
+> leases, fenced completion and recovery. `GET /health` reports process liveness
+> only. Event relay, chaos testing and load-test guarantees remain in progress.
 
 ## The problem
 
@@ -111,6 +112,6 @@ Run `npm run typecheck`, `npm run lint`, and `npm test` after building. With Pos
 
 ## What's next
 
-The next milestones complete job API verification, worker leases and recovery, events,
+The next milestones complete job API verification, event delivery and caching,
 observability, and reproducible failure testing. The goal is a queue whose behavior
 under failure can be explained and measured, not just a happy-path demo.
