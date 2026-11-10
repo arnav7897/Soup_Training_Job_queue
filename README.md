@@ -129,7 +129,7 @@ coverage for the current queue module, not the entire application.
 
 ## What's next
 
-The next milestones complete job API verification and reproducible failure testing. The goal is a queue whose behavior
+The next milestones fix the confirmed pagination and outbox backlog failures, then repeat the relevant evidence runs. The goal is a queue whose behavior
 under failure can be explained and measured, not just a happy-path demo.
 
 ## Evidence, evaluation and submission
@@ -149,6 +149,7 @@ npm run test:chaos                 # 500 jobs, 4 workers, 3 kills; slow
 npm run chaos:batch                # 10 seeded runs, 10,000 jobs each
 npm run chaos:mutation             # isolated completion epoch-fence mutation
 npm run load                       # 100 mixed requests/s for 10 minutes
+npm run test:clock                 # isolated worker clock shifted by 24 hours
 ```
 
 Each chaos run uses a separate Compose project and database. The seed controls
@@ -178,6 +179,35 @@ three are supported by the design, checks and raw evidence above; live discussio
 requires explaining the actual results, assumptions, failures and tradeoffs rather
 than treating passing metrics as proof. The requested submission is an email reply
 to `team@trysoup.dev` with the repository and evidence; it has not been sent.
+A ready-to-review [email reply draft](SUBMISSION.md) is included.
+
+**Full results:** The [ten-seed chaos batch](runs/batch-2026-11-10T12-08-56-204Z-f788d9/batch-summary.json)
+completed all ten 10,000-job runs with their recorded checks passing: 100,000
+jobs, 191 worker kills, 121 recovered expiries, 11 fence rejections and 118
+extra execution records in aggregate. The
+[100-rps load run](runs/load-2026-11-10T12-24-25-133Z-a211f6/summary.json)
+completed all 60,000 requests at 100.0 rps with 9.37 ms p50 and 24.19 ms p99,
+but **failed** the outbox drain requirement: 90,644 events were pending at the
+end of traffic and 85,865 remained after 121 seconds. The oldest pending event
+aged from 430 to 527 seconds during that drain. A [captured query plan](runs/load-2026-11-10T12-24-25-133Z-a211f6/relay-explain.txt)
+shows the relay scanning past 39,844 published rows to find one unpublished row.
+The first performance fix to test is a partial index for unpublished outbox rows,
+then remeasure and assess whether batching is also needed. These measurements use
+20 ms simulated jobs and do not establish performance for real training workloads.
+
+The [worker-clock probe](runs/clock-2026-11-10T12-40-46-542Z-188d94/summary.json)
+passed with a roughly 24-hour worker clock offset: the lease remained tied to
+Postgres time and the job committed one effect. Run `npm run test:isolation`
+with `DATABASE_URL` pointing to a test Postgres user allowed to create schemas.
+
+The [isolation comparison](runs/isolation-2026-11-10T12-38-28-452Z-86f84353/summary.json)
+passed its checks at READ COMMITTED. Under SERIALIZABLE, the probe retried 6,447
+serialization conflicts in 6,997 attempts and observed 50 unexpected cancellation
+responses; it found no state/effect invariant failures in those races. The probe
+retries database errors itself; the application does not currently implement such
+retries, and READ COMMITTED remains the intended isolation level. The [earlier
+comparison](runs/isolation-2026-11-10T12-37-34-009Z-f541a058/summary.json) is
+also retained, with its coarser combined failure count.
 
 **Known failing requirement:** A [retained pagination probe](runs/pagination-probe-2026-11-10/output.log)
 shows that a transaction can insert a job, remain uncommitted while a later job
@@ -192,8 +222,8 @@ impact on write throughput before declaring the service ready.
 `now()` can remain fixed while a completion waits past its lease; the lease checks
 now acquire the lock before consulting the database clock, with regression tests.
 The first chaos and mutation rehearsals also exposed weaknesses in the test setup
-itself. Remaining concerns include the confirmed pagination skip, whether the full fault and load runs satisfy
-all invariants, whether outbox lag stays flat at sustained load, the cost of a
+itself. Remaining concerns include the confirmed pagination skip, the measured outbox
+backlog under sustained load, the cost of a
 Postgres version read on cache hits, database and network failures outside this
 single-host harness, and unbounded event and execution history. Do not infer a
 production guarantee from a small smoke run.
