@@ -90,7 +90,8 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('text/plain');
     expect(response.body).toContain('queue_lease_expiries_total 2');
-    expect(response.body).toMatch(/queue_fence_rejections_total [3-9][0-9]*/);
+    const rejected = response.body.match(/queue_fence_rejections_total ([0-9]+)/);
+    expect(Number(rejected?.[1])).toBeGreaterThanOrEqual(3);
     expect(response.body).toMatch(/queue_claims_total [0-9]+/);
     expect(response.body).toContain('queue_jobs{state="failed"} 1');
     expect(response.body).toMatch(/queue_outbox_oldest_age_seconds [0-9.]+/);
