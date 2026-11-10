@@ -23,7 +23,9 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     expect(claims).toHaveLength(1);
     const first = claims[0];
     const owner = (await pool.query('SELECT lease_owner FROM jobs WHERE id=$1', [id])).rows[0].lease_owner;
+    const initialVersion = (await pool.query('SELECT version FROM jobs WHERE id=$1', [id])).rows[0].version;
     expect(await heartbeat(pool, first, owner, 10000)).toBe(true);
+    expect((await pool.query('SELECT version FROM jobs WHERE id=$1', [id])).rows[0].version).toBe(initialVersion + 1);
     await pool.query("UPDATE jobs SET lease_expires_at=now()-interval '1 second' WHERE id=$1", [id]);
     expect(await complete(pool, first, owner)).toBe(false);
     expect(await reap(pool)).toBe(1);
