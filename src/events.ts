@@ -14,7 +14,7 @@ end
 return 1`;
 
 export function redisClient(url: string): Redis {
-  const redis = new Redis(url, { lazyConnect: true, enableOfflineQueue: false, maxRetriesPerRequest: 1, connectTimeout: 1000, retryStrategy: () => 1000 });
+  const redis = new Redis(url, { lazyConnect: true, enableOfflineQueue: false, maxRetriesPerRequest: 1, connectTimeout: 1000, commandTimeout: 1000, retryStrategy: () => 1000 });
   redis.on('error', error => console.error('Redis:', error.message));
   return redis;
 }
