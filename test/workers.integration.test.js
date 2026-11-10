@@ -54,6 +54,20 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
       expect(cancel.statusCode).toBe(finish ? 409 : 200);
     }
 
+    await Promise.all(Array.from({ length: 200 }, () => insert()));
+    const claimed = [];
+    await Promise.all(Array.from({ length: 50 }, async (_, i) => {
+      const worker = `load-${i}`;
+      for (;;) {
+        const job = await claim(pool, worker, 30000);
+        if (!job) break;
+        claimed.push(job.id);
+        expect(await complete(pool, job, worker)).toBe(true);
+      }
+    }));
+    expect(claimed).toHaveLength(200);
+    expect(new Set(claimed).size).toBe(200);
+
     const exhausted = await insert(0, 1);
     await claim(pool, 'dead', 10000);
     await pool.query("UPDATE jobs SET lease_expires_at=now()-interval '1 second' WHERE id=$1", [exhausted]);
