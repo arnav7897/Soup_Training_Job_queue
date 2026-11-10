@@ -1,0 +1,9 @@
+services:
+  api:
+    ports: !override
+      - '127.0.0.1::3000'
+  worker:
+    deploy:
+      replicas: 4
+    environment:
+      LEASE_MS: '3000'

@@ -1,0 +1,218 @@
+worker-6  | 2026-11-10T11:56:43.803446588Z {"time":"2026-11-10T11:56:43.802Z","level":"info","component":"worker","event":"job_claimed","worker":"9eeaaa9a-c762-4bda-bb2f-d8b872bf7a8c","job":"a16f2b94-303b-49a9-96c5-12731c754cb4","epoch":1}
+worker-6  | 2026-11-10T11:56:52.813025769Z {"time":"2026-11-10T11:56:52.812Z","level":"info","component":"worker","event":"job_completed","worker":"9eeaaa9a-c762-4bda-bb2f-d8b872bf7a8c","job":"a16f2b94-303b-49a9-96c5-12731c754cb4","epoch":1}
+worker-6  | 2026-11-10T11:56:57.868384112Z {"time":"2026-11-10T11:56:57.868Z","level":"info","component":"worker","event":"leases_recovered","worker":"9eeaaa9a-c762-4bda-bb2f-d8b872bf7a8c","count":1}
+worker-6  | 2026-11-10T11:56:57.873580459Z {"time":"2026-11-10T11:56:57.873Z","level":"info","component":"worker","event":"job_claimed","worker":"9eeaaa9a-c762-4bda-bb2f-d8b872bf7a8c","job":"3414e3c5-cac1-4c8d-b041-bc8dcdf48b52","epoch":5}
+worker-6  | 2026-11-10T11:57:06.887662038Z {"time":"2026-11-10T11:57:06.887Z","level":"info","component":"worker","event":"job_completed","worker":"9eeaaa9a-c762-4bda-bb2f-d8b872bf7a8c","job":"3414e3c5-cac1-4c8d-b041-bc8dcdf48b52","epoch":5}
+worker-1  | 2026-11-10T11:56:43.599865001Z {"time":"2026-11-10T11:56:43.597Z","level":"info","component":"worker","event":"job_claimed","worker":"e6cde4df-d651-4a88-bd47-005e82831db8","job":"3414e3c5-cac1-4c8d-b041-bc8dcdf48b52","epoch":1}
+worker-2  | 2026-11-10T11:56:43.489084119Z {"time":"2026-11-10T11:56:43.487Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"f945c629-2bbb-4aaf-a160-904afd4a69b8","epoch":1}
+worker-2  | 2026-11-10T11:56:52.503550524Z {"time":"2026-11-10T11:56:52.502Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"f945c629-2bbb-4aaf-a160-904afd4a69b8","epoch":1}
+worker-2  | 2026-11-10T11:56:52.517774452Z {"time":"2026-11-10T11:56:52.517Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"c888f3f5-179f-44f8-ac6a-075a6a5c572c","epoch":1}
+worker-2  | 2026-11-10T11:56:52.528944364Z {"time":"2026-11-10T11:56:52.528Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"c888f3f5-179f-44f8-ac6a-075a6a5c572c","epoch":1}
+worker-2  | 2026-11-10T11:56:52.536507142Z {"time":"2026-11-10T11:56:52.536Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"5b25eb46-e842-4f2c-9903-7cc67b3125ea","epoch":1}
+worker-2  | 2026-11-10T11:56:52.545849149Z {"time":"2026-11-10T11:56:52.545Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"5b25eb46-e842-4f2c-9903-7cc67b3125ea","epoch":1}
+worker-2  | 2026-11-10T11:56:52.556660668Z {"time":"2026-11-10T11:56:52.556Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"f071ddc7-45e4-49e9-890b-6600dd57ea0b","epoch":1}
+worker-2  | 2026-11-10T11:56:52.567476766Z {"time":"2026-11-10T11:56:52.567Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"f071ddc7-45e4-49e9-890b-6600dd57ea0b","epoch":1}
+worker-2  | 2026-11-10T11:56:52.573927930Z {"time":"2026-11-10T11:56:52.573Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"a075a384-a086-4514-a878-b69fbebb45c7","epoch":1}
+worker-2  | 2026-11-10T11:56:52.589886023Z {"time":"2026-11-10T11:56:52.589Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"a075a384-a086-4514-a878-b69fbebb45c7","epoch":1}
+worker-2  | 2026-11-10T11:56:52.596307559Z {"time":"2026-11-10T11:56:52.596Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"b1fea632-04e7-4f46-aef2-21449355b436","epoch":1}
+worker-2  | 2026-11-10T11:56:52.609045231Z {"time":"2026-11-10T11:56:52.608Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"b1fea632-04e7-4f46-aef2-21449355b436","epoch":1}
+worker-2  | 2026-11-10T11:56:52.612818372Z {"time":"2026-11-10T11:56:52.612Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"1e878f7b-f808-40f2-a191-711ea4e4531a","epoch":1}
+worker-2  | 2026-11-10T11:56:52.620970846Z {"time":"2026-11-10T11:56:52.620Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"1e878f7b-f808-40f2-a191-711ea4e4531a","epoch":1}
+worker-2  | 2026-11-10T11:56:52.624757820Z {"time":"2026-11-10T11:56:52.624Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"389fcc38-9a85-4385-a0d9-c2526b1dd053","epoch":1}
+worker-2  | 2026-11-10T11:56:52.629171276Z {"time":"2026-11-10T11:56:52.628Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"389fcc38-9a85-4385-a0d9-c2526b1dd053","epoch":1}
+worker-2  | 2026-11-10T11:56:52.632939844Z {"time":"2026-11-10T11:56:52.632Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"934d939c-e4d6-43b1-ab7d-1c365506c32a","epoch":1}
+worker-2  | 2026-11-10T11:56:52.645280622Z {"time":"2026-11-10T11:56:52.644Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"934d939c-e4d6-43b1-ab7d-1c365506c32a","epoch":1}
+worker-2  | 2026-11-10T11:56:52.649062844Z {"time":"2026-11-10T11:56:52.648Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"8ac3b207-511b-4148-9975-f13e2124490b","epoch":1}
+worker-2  | 2026-11-10T11:56:52.653496539Z {"time":"2026-11-10T11:56:52.653Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"8ac3b207-511b-4148-9975-f13e2124490b","epoch":1}
+worker-2  | 2026-11-10T11:56:52.657033761Z {"time":"2026-11-10T11:56:52.656Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"85e1e7dd-c5c7-4cf7-ba5a-52a47bef0b1c","epoch":1}
+worker-2  | 2026-11-10T11:56:52.665597924Z {"time":"2026-11-10T11:56:52.665Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"85e1e7dd-c5c7-4cf7-ba5a-52a47bef0b1c","epoch":1}
+worker-2  | 2026-11-10T11:56:52.670168375Z {"time":"2026-11-10T11:56:52.669Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"0f026266-65b8-4d74-a278-89587047ae8c","epoch":1}
+worker-2  | 2026-11-10T11:56:52.673935580Z {"time":"2026-11-10T11:56:52.673Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"0f026266-65b8-4d74-a278-89587047ae8c","epoch":1}
+worker-2  | 2026-11-10T11:56:52.676419579Z {"time":"2026-11-10T11:56:52.676Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"4ba68275-04ad-4489-9aec-108628ce63a8","epoch":1}
+worker-2  | 2026-11-10T11:56:52.688414424Z {"time":"2026-11-10T11:56:52.688Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"4ba68275-04ad-4489-9aec-108628ce63a8","epoch":1}
+worker-2  | 2026-11-10T11:56:52.691613579Z {"time":"2026-11-10T11:56:52.691Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"ba3e4c03-c640-48a2-b50f-a4ba64ec1f41","epoch":1}
+worker-2  | 2026-11-10T11:56:52.703048407Z {"time":"2026-11-10T11:56:52.702Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"ba3e4c03-c640-48a2-b50f-a4ba64ec1f41","epoch":1}
+worker-2  | 2026-11-10T11:56:52.706302232Z {"time":"2026-11-10T11:56:52.706Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"c82f8092-9e34-4b5a-8593-77f69638f00e","epoch":1}
+worker-2  | 2026-11-10T11:56:52.709719104Z {"time":"2026-11-10T11:56:52.709Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"c82f8092-9e34-4b5a-8593-77f69638f00e","epoch":1}
+worker-2  | 2026-11-10T11:56:52.712752618Z {"time":"2026-11-10T11:56:52.712Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"21b1f83f-1c90-4037-86f9-f4aaacf006d2","epoch":1}
+worker-2  | 2026-11-10T11:56:52.723395652Z {"time":"2026-11-10T11:56:52.723Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"21b1f83f-1c90-4037-86f9-f4aaacf006d2","epoch":1}
+worker-2  | 2026-11-10T11:56:52.726840983Z {"time":"2026-11-10T11:56:52.726Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"0254ea7b-bdef-4151-afee-737202fc5d67","epoch":1}
+worker-2  | 2026-11-10T11:56:52.730806464Z {"time":"2026-11-10T11:56:52.730Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"0254ea7b-bdef-4151-afee-737202fc5d67","epoch":1}
+worker-2  | 2026-11-10T11:56:52.733336129Z {"time":"2026-11-10T11:56:52.733Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"ef028059-d90d-4a88-832e-dd6b0f8a628e","epoch":1}
+worker-2  | 2026-11-10T11:56:52.742504812Z {"time":"2026-11-10T11:56:52.742Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"ef028059-d90d-4a88-832e-dd6b0f8a628e","epoch":1}
+worker-2  | 2026-11-10T11:56:52.745812058Z {"time":"2026-11-10T11:56:52.745Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"7b700eae-4be5-4f60-93e3-ed30e149e4a9","epoch":1}
+worker-2  | 2026-11-10T11:56:52.754016705Z {"time":"2026-11-10T11:56:52.753Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"7b700eae-4be5-4f60-93e3-ed30e149e4a9","epoch":1}
+worker-2  | 2026-11-10T11:56:52.757272349Z {"time":"2026-11-10T11:56:52.757Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"94ae265f-46c3-44a2-98df-470f2ad5e4fc","epoch":1}
+worker-2  | 2026-11-10T11:56:52.768971541Z {"time":"2026-11-10T11:56:52.768Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"94ae265f-46c3-44a2-98df-470f2ad5e4fc","epoch":1}
+worker-2  | 2026-11-10T11:56:52.772034388Z {"time":"2026-11-10T11:56:52.771Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"1c26e50e-1171-494d-ac64-ddcaf5f8a1d4","epoch":1}
+worker-2  | 2026-11-10T11:56:52.780708550Z {"time":"2026-11-10T11:56:52.780Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"1c26e50e-1171-494d-ac64-ddcaf5f8a1d4","epoch":1}
+worker-2  | 2026-11-10T11:56:52.784091296Z {"time":"2026-11-10T11:56:52.783Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"d711f3c7-7051-4dc2-87a4-6ca2586c2aa2","epoch":1}
+worker-2  | 2026-11-10T11:56:52.795205095Z {"time":"2026-11-10T11:56:52.794Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"d711f3c7-7051-4dc2-87a4-6ca2586c2aa2","epoch":1}
+worker-2  | 2026-11-10T11:56:55.336562073Z {"time":"2026-11-10T11:56:55.336Z","level":"info","component":"worker","event":"leases_recovered","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","count":1}
+worker-2  | 2026-11-10T11:56:55.339647876Z {"time":"2026-11-10T11:56:55.339Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"6b8eb0b3-8f0a-410e-9117-d23fe0cbb8db","epoch":5}
+worker-2  | 2026-11-10T11:57:04.353103438Z {"time":"2026-11-10T11:57:04.352Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"6b8eb0b3-8f0a-410e-9117-d23fe0cbb8db","epoch":5}
+worker-2  | 2026-11-10T11:57:04.358393952Z {"time":"2026-11-10T11:57:04.358Z","level":"info","component":"worker","event":"leases_recovered","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","count":1}
+worker-2  | 2026-11-10T11:57:04.362769611Z {"time":"2026-11-10T11:57:04.362Z","level":"info","component":"worker","event":"job_claimed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"2a50383b-e52c-4888-8b5b-2caa971d34bb","epoch":5}
+worker-2  | 2026-11-10T11:57:13.371945194Z {"time":"2026-11-10T11:57:13.371Z","level":"info","component":"worker","event":"job_completed","worker":"adf2806b-f5e5-4994-80db-2d5724a0817f","job":"2a50383b-e52c-4888-8b5b-2caa971d34bb","epoch":5}
+db-1      | 2026-11-10T11:56:33.609784178Z The files belonging to this database system will be owned by user "postgres".
+worker-4  | 2026-11-10T11:56:43.227990141Z {"time":"2026-11-10T11:56:43.226Z","level":"info","component":"worker","event":"job_claimed","worker":"e673b692-0aec-4b8c-ae92-57aba259796e","job":"2a50383b-e52c-4888-8b5b-2caa971d34bb","epoch":1}
+db-1      | 2026-11-10T11:56:33.609850647Z This user must also own the server process.
+db-1      | 2026-11-10T11:56:33.609857813Z 
+db-1      | 2026-11-10T11:56:33.609861423Z The database cluster will be initialized with locale "en_US.utf8".
+db-1      | 2026-11-10T11:56:33.609865468Z The default database encoding has accordingly been set to "UTF8".
+db-1      | 2026-11-10T11:56:33.609868975Z The default text search configuration will be set to "english".
+db-1      | 2026-11-10T11:56:33.609872400Z 
+db-1      | 2026-11-10T11:56:33.609875823Z Data page checksums are disabled.
+db-1      | 2026-11-10T11:56:33.609886676Z 
+db-1      | 2026-11-10T11:56:33.610151860Z fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1      | 2026-11-10T11:56:33.613083189Z creating subdirectories ... ok
+db-1      | 2026-11-10T11:56:33.613240108Z selecting dynamic shared memory implementation ... posix
+db-1      | 2026-11-10T11:56:33.637363736Z selecting default max_connections ... 100
+db-1      | 2026-11-10T11:56:33.681392312Z selecting default shared_buffers ... 128MB
+db-1      | 2026-11-10T11:56:33.736308905Z selecting default time zone ... UTC
+db-1      | 2026-11-10T11:56:33.737463955Z creating configuration files ... ok
+db-1      | 2026-11-10T11:56:33.908423616Z running bootstrap script ... ok
+db-1      | 2026-11-10T11:56:34.253243736Z sh: locale: not found
+db-1      | 2026-11-10T11:56:34.253277657Z 2026-11-10 11:56:34.253 UTC [35] WARNING:  no usable system locales were found
+db-1      | 2026-11-10T11:56:34.850032291Z performing post-bootstrap initialization ... ok
+db-1      | 2026-11-10T11:56:34.990976896Z initdb: warning: enabling "trust" authentication for local connections
+db-1      | 2026-11-10T11:56:34.991006933Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1      | 2026-11-10T11:56:34.991020025Z syncing data to disk ... ok
+db-1      | 2026-11-10T11:56:34.991022350Z 
+db-1      | 2026-11-10T11:56:34.991024274Z 
+db-1      | 2026-11-10T11:56:34.991026199Z Success. You can now start the database server using:
+db-1      | 2026-11-10T11:56:34.991028236Z 
+db-1      | 2026-11-10T11:56:34.991030117Z     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1      | 2026-11-10T11:56:34.991032156Z 
+db-1      | 2026-11-10T11:56:35.061871232Z waiting for server to start....2026-11-10 11:56:35.061 UTC [41] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1      | 2026-11-10T11:56:35.064105708Z 2026-11-10 11:56:35.063 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1      | 2026-11-10T11:56:35.071891715Z 2026-11-10 11:56:35.071 UTC [44] LOG:  database system was shut down at 2026-11-10 11:56:34 UTC
+db-1      | 2026-11-10T11:56:35.079610345Z 2026-11-10 11:56:35.079 UTC [41] LOG:  database system is ready to accept connections
+db-1      | 2026-11-10T11:56:35.125950258Z  done
+db-1      | 2026-11-10T11:56:35.125986165Z server started
+db-1      | 2026-11-10T11:56:35.219119333Z CREATE DATABASE
+db-1      | 2026-11-10T11:56:35.219771793Z 
+db-1      | 2026-11-10T11:56:35.219940383Z 
+db-1      | 2026-11-10T11:56:35.219971226Z /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-1      | 2026-11-10T11:56:35.219978031Z 
+db-1      | 2026-11-10T11:56:35.221568644Z waiting for server to shut down....2026-11-10 11:56:35.221 UTC [41] LOG:  received fast shutdown request
+db-1      | 2026-11-10T11:56:35.223520670Z 2026-11-10 11:56:35.223 UTC [41] LOG:  aborting any active transactions
+db-1      | 2026-11-10T11:56:35.227943991Z 2026-11-10 11:56:35.227 UTC [41] LOG:  background worker "logical replication launcher" (PID 47) exited with exit code 1
+db-1      | 2026-11-10T11:56:35.228014070Z 2026-11-10 11:56:35.227 UTC [42] LOG:  shutting down
+db-1      | 2026-11-10T11:56:35.230215059Z 2026-11-10 11:56:35.230 UTC [42] LOG:  checkpoint starting: shutdown immediate
+db-1      | 2026-11-10T11:56:35.280626070Z 2026-11-10 11:56:35.280 UTC [42] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.020 s, sync=0.023 s, total=0.053 s; sync files=301, longest=0.006 s, average=0.001 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D58, redo lsn=0/1925D58
+db-1      | 2026-11-10T11:56:35.287783783Z 2026-11-10 11:56:35.287 UTC [41] LOG:  database system is shut down
+db-1      | 2026-11-10T11:56:35.322116666Z  done
+db-1      | 2026-11-10T11:56:35.322161522Z server stopped
+db-1      | 2026-11-10T11:56:35.323731622Z 
+db-1      | 2026-11-10T11:56:35.323765036Z PostgreSQL init process complete; ready for start up.
+db-1      | 2026-11-10T11:56:35.323771033Z 
+db-1      | 2026-11-10T11:56:35.354812470Z 2026-11-10 11:56:35.354 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1      | 2026-11-10T11:56:35.354851634Z 2026-11-10 11:56:35.354 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1      | 2026-11-10T11:56:35.354859062Z 2026-11-10 11:56:35.354 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1      | 2026-11-10T11:56:35.359334559Z 2026-11-10 11:56:35.359 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1      | 2026-11-10T11:56:35.365326039Z 2026-11-10 11:56:35.365 UTC [57] LOG:  database system was shut down at 2026-11-10 11:56:35 UTC
+db-1      | 2026-11-10T11:56:35.372539383Z 2026-11-10 11:56:35.372 UTC [1] LOG:  database system is ready to accept connections
+relay-1   | 2026-11-10T11:56:43.578607156Z {"time":"2026-11-10T11:56:43.577Z","level":"error","component":"relay","event":"publish_failed","error":"Stream isn't writeable and enableOfflineQueue options is false"}
+worker-5  | 2026-11-10T11:56:43.704162136Z {"time":"2026-11-10T11:56:43.701Z","level":"info","component":"worker","event":"job_claimed","worker":"61f30e48-1685-4120-8f23-3886f72dd802","job":"6b8eb0b3-8f0a-410e-9117-d23fe0cbb8db","epoch":1}
+worker-7  | 2026-11-10T11:56:43.194873516Z {"time":"2026-11-10T11:56:43.191Z","level":"info","component":"worker","event":"job_claimed","worker":"bdfa1650-9e2f-40ad-b12e-a43eec17e7ef","job":"331c4b32-711a-48ee-8aeb-7737aaf23fc2","epoch":1}
+worker-7  | 2026-11-10T11:56:52.208997112Z {"time":"2026-11-10T11:56:52.208Z","level":"info","component":"worker","event":"job_completed","worker":"bdfa1650-9e2f-40ad-b12e-a43eec17e7ef","job":"331c4b32-711a-48ee-8aeb-7737aaf23fc2","epoch":1}
+worker-7  | 2026-11-10T11:56:52.216716453Z {"time":"2026-11-10T11:56:52.216Z","level":"info","component":"worker","event":"leases_recovered","worker":"bdfa1650-9e2f-40ad-b12e-a43eec17e7ef","count":3}
+worker-7  | 2026-11-10T11:56:52.220223441Z {"time":"2026-11-10T11:56:52.220Z","level":"info","component":"worker","event":"job_claimed","worker":"bdfa1650-9e2f-40ad-b12e-a43eec17e7ef","job":"2a50383b-e52c-4888-8b5b-2caa971d34bb","epoch":3}
+worker-3  | 2026-11-10T11:56:43.195576262Z {"time":"2026-11-10T11:56:43.192Z","level":"info","component":"worker","event":"job_claimed","worker":"504248c4-57f8-48a8-9cef-4f9d48d0da5b","job":"f12d4b00-9f83-43bb-b380-341bd7ff3701","epoch":1}
+worker-3  | 2026-11-10T11:56:52.210182294Z {"time":"2026-11-10T11:56:52.209Z","level":"info","component":"worker","event":"job_completed","worker":"504248c4-57f8-48a8-9cef-4f9d48d0da5b","job":"f12d4b00-9f83-43bb-b380-341bd7ff3701","epoch":1}
+worker-3  | 2026-11-10T11:56:52.217496510Z {"time":"2026-11-10T11:56:52.217Z","level":"info","component":"worker","event":"job_claimed","worker":"504248c4-57f8-48a8-9cef-4f9d48d0da5b","job":"c4d7fa1c-2758-4589-9975-5bf5bcc9f940","epoch":1}
+worker-3  | 2026-11-10T11:56:52.228829933Z {"time":"2026-11-10T11:56:52.228Z","level":"info","component":"worker","event":"job_completed","worker":"504248c4-57f8-48a8-9cef-4f9d48d0da5b","job":"c4d7fa1c-2758-4589-9975-5bf5bcc9f940","epoch":1}
+worker-3  | 2026-11-10T11:56:52.234057916Z {"time":"2026-11-10T11:56:52.233Z","level":"info","component":"worker","event":"job_claimed","worker":"504248c4-57f8-48a8-9cef-4f9d48d0da5b","job":"3414e3c5-cac1-4c8d-b041-bc8dcdf48b52","epoch":3}
+redis-1   | 2026-11-10T11:56:33.235527433Z 1:C 10 Nov 2026 11:56:33.235 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1   | 2026-11-10T11:56:33.235632293Z 1:C 10 Nov 2026 11:56:33.235 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1   | 2026-11-10T11:56:33.235644065Z 1:C 10 Nov 2026 11:56:33.235 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1   | 2026-11-10T11:56:33.236529030Z 1:M 10 Nov 2026 11:56:33.236 * monotonic clock: POSIX clock_gettime
+redis-1   | 2026-11-10T11:56:33.239551828Z 1:M 10 Nov 2026 11:56:33.238 * Running mode=standalone, port=6379.
+redis-1   | 2026-11-10T11:56:33.239590016Z 1:M 10 Nov 2026 11:56:33.239 * Server initialized
+redis-1   | 2026-11-10T11:56:33.239595689Z 1:M 10 Nov 2026 11:56:33.239 * Ready to accept connections tcp
+worker-8  | 2026-11-10T11:56:43.296243222Z {"time":"2026-11-10T11:56:43.294Z","level":"info","component":"worker","event":"job_claimed","worker":"5abb752c-60da-4424-ba66-797d3e7e45cd","job":"870799c9-c397-436f-8ef2-31618c677c77","epoch":1}
+worker-8  | 2026-11-10T11:56:52.311387146Z {"time":"2026-11-10T11:56:52.310Z","level":"info","component":"worker","event":"job_completed","worker":"5abb752c-60da-4424-ba66-797d3e7e45cd","job":"870799c9-c397-436f-8ef2-31618c677c77","epoch":1}
+worker-8  | 2026-11-10T11:56:52.320664886Z {"time":"2026-11-10T11:56:52.320Z","level":"info","component":"worker","event":"job_claimed","worker":"5abb752c-60da-4424-ba66-797d3e7e45cd","job":"6b8eb0b3-8f0a-410e-9117-d23fe0cbb8db","epoch":3}
+api-1     | 2026-11-10T11:56:41.118488424Z {"level":30,"time":1794311801113,"pid":1,"hostname":"7893d3875c3f","msg":"Server listening at http://127.0.0.1:3000"}
+api-1     | 2026-11-10T11:56:41.119151842Z {"level":30,"time":1794311801116,"pid":1,"hostname":"7893d3875c3f","msg":"Server listening at http://172.20.0.6:3000"}
+api-1     | 2026-11-10T11:56:43.011522857Z {"level":30,"time":1794311803010,"pid":1,"hostname":"7893d3875c3f","reqId":"req-1","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64190},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.040745790Z {"level":30,"time":1794311803034,"pid":1,"hostname":"7893d3875c3f","reqId":"req-2","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64220},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.040778064Z {"level":30,"time":1794311803035,"pid":1,"hostname":"7893d3875c3f","reqId":"req-3","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64230},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.040782722Z {"level":30,"time":1794311803037,"pid":1,"hostname":"7893d3875c3f","reqId":"req-4","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64240},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.040786014Z {"level":30,"time":1794311803038,"pid":1,"hostname":"7893d3875c3f","reqId":"req-5","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64242},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.040789036Z {"level":30,"time":1794311803039,"pid":1,"hostname":"7893d3875c3f","reqId":"req-6","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64200},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056563255Z {"level":30,"time":1794311803042,"pid":1,"hostname":"7893d3875c3f","reqId":"req-7","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64212},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056586974Z {"level":30,"time":1794311803043,"pid":1,"hostname":"7893d3875c3f","reqId":"req-8","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64224},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056590694Z {"level":30,"time":1794311803044,"pid":1,"hostname":"7893d3875c3f","reqId":"req-9","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64262},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056593707Z {"level":30,"time":1794311803045,"pid":1,"hostname":"7893d3875c3f","reqId":"req-a","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64246},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056596624Z {"level":30,"time":1794311803047,"pid":1,"hostname":"7893d3875c3f","reqId":"req-b","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64278},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056599783Z {"level":30,"time":1794311803048,"pid":1,"hostname":"7893d3875c3f","reqId":"req-c","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64282},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056623897Z {"level":30,"time":1794311803048,"pid":1,"hostname":"7893d3875c3f","reqId":"req-d","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64294},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056627240Z {"level":30,"time":1794311803049,"pid":1,"hostname":"7893d3875c3f","reqId":"req-e","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64312},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056630321Z {"level":30,"time":1794311803050,"pid":1,"hostname":"7893d3875c3f","reqId":"req-f","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64300},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056634277Z {"level":30,"time":1794311803050,"pid":1,"hostname":"7893d3875c3f","reqId":"req-g","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64330},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056637387Z {"level":30,"time":1794311803051,"pid":1,"hostname":"7893d3875c3f","reqId":"req-h","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64320},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056640349Z {"level":30,"time":1794311803051,"pid":1,"hostname":"7893d3875c3f","reqId":"req-i","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64340},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056643216Z {"level":30,"time":1794311803052,"pid":1,"hostname":"7893d3875c3f","reqId":"req-j","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64346},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056646562Z {"level":30,"time":1794311803053,"pid":1,"hostname":"7893d3875c3f","reqId":"req-k","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64348},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056649593Z {"level":30,"time":1794311803053,"pid":1,"hostname":"7893d3875c3f","reqId":"req-l","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64360},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056652744Z {"level":30,"time":1794311803054,"pid":1,"hostname":"7893d3875c3f","reqId":"req-m","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64378},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056655718Z {"level":30,"time":1794311803054,"pid":1,"hostname":"7893d3875c3f","reqId":"req-n","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64374},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056658781Z {"level":30,"time":1794311803055,"pid":1,"hostname":"7893d3875c3f","reqId":"req-o","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64394},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.056664859Z {"level":30,"time":1794311803055,"pid":1,"hostname":"7893d3875c3f","reqId":"req-p","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64410},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.181811682Z {"level":30,"time":1794311803181,"pid":1,"hostname":"7893d3875c3f","reqId":"req-8","res":{"statusCode":201},"responseTime":137.77842499999997,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.190783134Z {"level":30,"time":1794311803186,"pid":1,"hostname":"7893d3875c3f","reqId":"req-6","res":{"statusCode":201},"responseTime":146.57779900000014,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.190820136Z {"level":30,"time":1794311803187,"pid":1,"hostname":"7893d3875c3f","reqId":"req-4","res":{"statusCode":201},"responseTime":150.43139900000006,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.190826582Z {"level":30,"time":1794311803189,"pid":1,"hostname":"7893d3875c3f","reqId":"req-5","res":{"statusCode":201},"responseTime":151.04409600000008,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.204547056Z {"level":30,"time":1794311803194,"pid":1,"hostname":"7893d3875c3f","reqId":"req-7","res":{"statusCode":201},"responseTime":152.57709999999997,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.204588744Z {"level":30,"time":1794311803195,"pid":1,"hostname":"7893d3875c3f","reqId":"req-1","res":{"statusCode":201},"responseTime":184.4772509999998,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.204595571Z {"level":30,"time":1794311803197,"pid":1,"hostname":"7893d3875c3f","reqId":"req-2","res":{"statusCode":201},"responseTime":162.9488019999999,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.204599751Z {"level":30,"time":1794311803198,"pid":1,"hostname":"7893d3875c3f","reqId":"req-3","res":{"statusCode":201},"responseTime":162.4780999999998,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.215489562Z {"level":30,"time":1794311803205,"pid":1,"hostname":"7893d3875c3f","reqId":"req-9","res":{"statusCode":201},"responseTime":161.3696689999997,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.215543811Z {"level":30,"time":1794311803207,"pid":1,"hostname":"7893d3875c3f","reqId":"req-a","res":{"statusCode":201},"responseTime":161.6555510000003,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.215551957Z {"level":30,"time":1794311803208,"pid":1,"hostname":"7893d3875c3f","reqId":"req-q","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64224},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.215558037Z {"level":30,"time":1794311803211,"pid":1,"hostname":"7893d3875c3f","reqId":"req-b","res":{"statusCode":201},"responseTime":163.8286780000003,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.224850308Z {"level":30,"time":1794311803216,"pid":1,"hostname":"7893d3875c3f","reqId":"req-r","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64240},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.224905702Z {"level":30,"time":1794311803217,"pid":1,"hostname":"7893d3875c3f","reqId":"req-s","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64242},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.224932341Z {"level":30,"time":1794311803218,"pid":1,"hostname":"7893d3875c3f","reqId":"req-t","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64200},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.224939186Z {"level":30,"time":1794311803218,"pid":1,"hostname":"7893d3875c3f","reqId":"req-u","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64420},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.224944624Z {"level":30,"time":1794311803221,"pid":1,"hostname":"7893d3875c3f","reqId":"req-c","res":{"statusCode":201},"responseTime":172.81949899999972,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.224949474Z {"level":30,"time":1794311803222,"pid":1,"hostname":"7893d3875c3f","reqId":"req-d","res":{"statusCode":201},"responseTime":173.48434499999985,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.224954093Z {"level":30,"time":1794311803223,"pid":1,"hostname":"7893d3875c3f","reqId":"req-e","res":{"statusCode":201},"responseTime":173.7276780000002,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.235009209Z {"level":30,"time":1794311803226,"pid":1,"hostname":"7893d3875c3f","reqId":"req-v","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64190},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.235053850Z {"level":30,"time":1794311803227,"pid":1,"hostname":"7893d3875c3f","reqId":"req-w","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64220},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.235058348Z {"level":30,"time":1794311803227,"pid":1,"hostname":"7893d3875c3f","reqId":"req-x","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64230},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.235061776Z {"level":30,"time":1794311803228,"pid":1,"hostname":"7893d3875c3f","reqId":"req-y","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64436},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.235064853Z {"level":30,"time":1794311803231,"pid":1,"hostname":"7893d3875c3f","reqId":"req-f","res":{"statusCode":201},"responseTime":181.24178400000028,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.235068042Z {"level":30,"time":1794311803232,"pid":1,"hostname":"7893d3875c3f","reqId":"req-g","res":{"statusCode":201},"responseTime":181.41125899999997,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.235070653Z {"level":30,"time":1794311803233,"pid":1,"hostname":"7893d3875c3f","reqId":"req-h","res":{"statusCode":201},"responseTime":182.0353170000003,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.235073378Z {"level":30,"time":1794311803234,"pid":1,"hostname":"7893d3875c3f","reqId":"req-i","res":{"statusCode":201},"responseTime":182.53465000000006,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.240457751Z {"level":30,"time":1794311803235,"pid":1,"hostname":"7893d3875c3f","reqId":"req-z","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64212},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.240523084Z {"level":30,"time":1794311803236,"pid":1,"hostname":"7893d3875c3f","reqId":"req-10","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64262},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.240532128Z {"level":30,"time":1794311803236,"pid":1,"hostname":"7893d3875c3f","reqId":"req-11","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64446},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.245490756Z {"level":30,"time":1794311803241,"pid":1,"hostname":"7893d3875c3f","reqId":"req-j","res":{"statusCode":201},"responseTime":188.88310899999988,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.245535074Z {"level":30,"time":1794311803241,"pid":1,"hostname":"7893d3875c3f","reqId":"req-12","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64454},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.245544556Z {"level":30,"time":1794311803243,"pid":1,"hostname":"7893d3875c3f","reqId":"req-l","res":{"statusCode":201},"responseTime":189.14679999999998,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.249875072Z {"level":30,"time":1794311803246,"pid":1,"hostname":"7893d3875c3f","reqId":"req-k","res":{"statusCode":201},"responseTime":192.87186100000008,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.249919959Z {"level":30,"time":1794311803247,"pid":1,"hostname":"7893d3875c3f","reqId":"req-m","res":{"statusCode":201},"responseTime":192.70207100000016,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.249928755Z {"level":30,"time":1794311803247,"pid":1,"hostname":"7893d3875c3f","reqId":"req-n","res":{"statusCode":201},"responseTime":192.9188610000001,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.249934225Z {"level":30,"time":1794311803248,"pid":1,"hostname":"7893d3875c3f","reqId":"req-o","res":{"statusCode":201},"responseTime":192.93151199999966,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.254340389Z {"level":30,"time":1794311803252,"pid":1,"hostname":"7893d3875c3f","reqId":"req-p","res":{"statusCode":201},"responseTime":196.448445,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.254390594Z {"level":30,"time":1794311803253,"pid":1,"hostname":"7893d3875c3f","reqId":"req-q","res":{"statusCode":200},"responseTime":44.88332800000035,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.254398879Z {"level":30,"time":1794311803253,"pid":1,"hostname":"7893d3875c3f","reqId":"req-s","res":{"statusCode":200},"responseTime":36.146834999999555,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.261374536Z {"level":30,"time":1794311803256,"pid":1,"hostname":"7893d3875c3f","reqId":"req-r","res":{"statusCode":201},"responseTime":40.102307999999994,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.261412387Z {"level":30,"time":1794311803257,"pid":1,"hostname":"7893d3875c3f","reqId":"req-13","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64246},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.261437882Z {"level":30,"time":1794311803259,"pid":1,"hostname":"7893d3875c3f","reqId":"req-u","res":{"statusCode":200},"responseTime":40.194956000000275,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.265949120Z {"level":30,"time":1794311803261,"pid":1,"hostname":"7893d3875c3f","reqId":"req-w","res":{"statusCode":201},"responseTime":34.259316000000126,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.265991504Z {"level":30,"time":1794311803262,"pid":1,"hostname":"7893d3875c3f","reqId":"req-x","res":{"statusCode":200},"responseTime":34.247007000000394,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.265997442Z {"level":30,"time":1794311803263,"pid":1,"hostname":"7893d3875c3f","reqId":"req-t","res":{"statusCode":201},"responseTime":45.03455199999962,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.266001172Z {"level":30,"time":1794311803264,"pid":1,"hostname":"7893d3875c3f","reqId":"req-z","res":{"statusCode":200},"responseTime":28.671483999999964,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.266004233Z {"level":30,"time":1794311803265,"pid":1,"hostname":"7893d3875c3f","reqId":"req-10","res":{"statusCode":200},"responseTime":28.774206999999933,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.267727655Z {"level":30,"time":1794311803266,"pid":1,"hostname":"7893d3875c3f","reqId":"req-y","res":{"statusCode":201},"responseTime":37.59747100000004,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.267773976Z {"level":30,"time":1794311803267,"pid":1,"hostname":"7893d3875c3f","reqId":"req-11","res":{"statusCode":200},"responseTime":30.58292399999982,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.268651274Z {"level":30,"time":1794311803267,"pid":1,"hostname":"7893d3875c3f","reqId":"req-v","res":{"statusCode":201},"responseTime":41.074419000000034,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.268677212Z {"level":30,"time":1794311803268,"pid":1,"hostname":"7893d3875c3f","reqId":"req-13","res":{"statusCode":200},"responseTime":11.055754999999863,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.269573405Z {"level":30,"time":1794311803269,"pid":1,"hostname":"7893d3875c3f","reqId":"req-14","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:44101","remoteAddress":"172.20.0.1","remotePort":64220},"msg":"incoming request"}
+api-1     | 2026-11-10T11:56:43.270953155Z {"level":30,"time":1794311803270,"pid":1,"hostname":"7893d3875c3f","reqId":"req-12","res":{"statusCode":200},"responseTime":28.665483000000222,"msg":"request completed"}
+api-1     | 2026-11-10T11:56:43.275127527Z {"level":30,"time":1794311803274,"pid":1,"hostname":"7893d3875c3f","reqId":"req-14","res":{"statusCode":200},"responseTime":5.42419800000016,"msg":"request completed"}

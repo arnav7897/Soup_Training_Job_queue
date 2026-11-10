@@ -1,0 +1,42 @@
+
+> training-job-queue@0.1.0 chaos
+> node scripts/chaos.cjs
+
+{
+  "run": "chaos-2026-11-10T11-55-20-095Z-95ddf7",
+  "seed": 1,
+  "requestedJobs": 30,
+  "project": "soupchaos39b6abb32a9a",
+  "status": "failed",
+  "startedAt": "2026-11-10T11:55:20.097Z",
+  "checks": {
+    "all_created_and_acknowledged": true,
+    "all_terminal": true,
+    "effects_match_states": true,
+    "legal_transitions": true,
+    "acknowledged_cancels_hold": true,
+    "no_client_or_fault_errors": false,
+    "zombie_exercised": true
+  },
+  "errors": [
+    "fault injection: Error: Command failed: docker kill --signal KILL e69b22890450cc18268ea4f075345ded89a2d497a1b2047e777744d92b75457e\nError response from daemon: cannot kill container: e69b22890450cc18268ea4f075345ded89a2d497a1b2047e777744d92b75457e: container e69b22890450cc18268ea4f075345ded89a2d497a1b2047e777744d92b75457e is not running\n"
+  ],
+  "limits": [
+    "Seed controls inputs and fault choices; OS scheduling and interleavings are not deterministic.",
+    "Single-host run does not test database, Redis, disk or network failure, or external effects."
+  ],
+  "observed": {
+    "jobs": 30,
+    "distinct_keys": 30,
+    "unfinished": 0,
+    "bad_effects": 0,
+    "illegal_transitions": 0,
+    "missing_initial_events": 0,
+    "bad_cancels": 0,
+    "executions": 36,
+    "duplicate_executions": 6,
+    "fence_rejections": 1,
+    "lease_expiries": 6
+  },
+  "finishedAt": "2026-11-10T11:57:25.252Z"
+}

@@ -1,0 +1,12 @@
+
+> training-job-queue@0.1.0 test:chaos
+> jest --runInBand --testMatch='**/*.slow.test.js'
+
+PASS test/chaos.slow.test.js (55.749 s)
+  ✓ chaos smoke: 500 jobs, four workers and three kills (55598 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       1 passed, 1 total
+Snapshots:   0 total
+Time:        55.779 s
+Ran all test suites.

@@ -2,7 +2,7 @@
 
 # Training Job Queue
 
-A planned Postgres-backed queue for training jobs, designed to keep work moving
+A Postgres-backed queue for training jobs, designed to keep work moving
 through worker crashes, retries, and cancellation races. This project is a backend
 exercise; simulated jobs stand in for real model training.
 
@@ -103,7 +103,7 @@ curl http://localhost:3000/metrics
 docker compose logs -f worker relay
 ```
 
-Metrics include job states, claims, completion fence rejections, expired leases,
+Metrics include job states, claims, rejected heartbeats and completions, expired leases,
 and unpublished outbox count and age. Claims come from execution records; the
 rejection and expiry counters begin at zero when the metrics migration is applied.
 `/health` only checks process liveness; `/metrics` returns 503 if Postgres is down.
@@ -131,3 +131,74 @@ coverage for the current queue module, not the entire application.
 
 The next milestones complete job API verification and reproducible failure testing. The goal is a queue whose behavior
 under failure can be explained and measured, not just a happy-path demo.
+
+## Evidence, evaluation and submission
+
+The deliverable is the [repository](https://github.com/arnav7897/Soup_Training_Job_queue),
+[design note](DESIGN.md), [AI usage record](AI_USAGE.md), and the harness and raw
+run artifacts in [`runs/`](runs/). Each run has an append-only event log, a
+summary and, when the stack starts, timestamped Compose logs. Docker volumes
+are retained after runs for investigation; remove them only after retaining the
+needed evidence. Failed runs stay alongside successful runs.
+
+Run the focused smoke and full evidence separately:
+
+```sh
+npm run build
+npm run test:chaos                 # 500 jobs, 4 workers, 3 kills; slow
+npm run chaos:batch                # 10 seeded runs, 10,000 jobs each
+npm run chaos:mutation             # isolated completion epoch-fence mutation
+npm run load                       # 100 mixed requests/s for 10 minutes
+```
+
+Each chaos run uses a separate Compose project and database. The seed controls
+input and fault choices; operating-system scheduling and race interleavings are
+not deterministic. The load runner records every request and periodic queue and
+outbox samples. Its 20 ms simulated jobs are a synthetic workload; inspect the
+retained lag samples and actual throughput before drawing conclusions. The
+scripts retain results on failed checks; a killed host process or host crash may
+prevent the final summary from being written.
+
+**Results so far:** the [500-job smoke run](runs/chaos-2026-11-10T11-58-06-699Z-59975e/summary.json)
+passed its recorded checks. The [first rehearsal](runs/chaos-2026-11-10T11-55-20-095Z-95ddf7/summary.json)
+failed because `docker kill` left workers stopped and the injector later selected
+one again; the harness now explicitly restarts killed workers. An [initial mutation
+run](runs/mutation-2026-11-10T12-02-29-369Z-65ab57/summary.json) survived removal
+of the epoch predicate: the sampled races were also protected by owner and lease
+checks. A deterministic stale-epoch probe was added to test the epoch fence
+itself. A [second mutation run](runs/mutation-2026-11-10T12-05-29-917Z-907ace/summary.json)
+detected the removed epoch predicate with that probe. Full chaos runs and the
+ten-minute load results must be read from their recorded summaries. The current
+verdict is **DON'T SHIP** because the pagination acceptance criterion fails;
+completion of the remaining evidence cannot erase that failure.
+
+The assessment weights are **correctness under failure 30%**, **silent failures
+20%**, **design and code quality 15%**, and **live discussion 35%**. The first
+three are supported by the design, checks and raw evidence above; live discussion
+requires explaining the actual results, assumptions, failures and tradeoffs rather
+than treating passing metrics as proof. The requested submission is an email reply
+to `team@trysoup.dev` with the repository and evidence; it has not been sent.
+
+**Known failing requirement:** A [retained pagination probe](runs/pagination-probe-2026-11-10/output.log)
+shows that a transaction can insert a job, remain uncommitted while a later job
+appears on the first page, and then commit behind the issued cursor. The next
+page misses the late-committing job. The probe uses an isolated schema and its
+[source is retained](runs/pagination-probe-2026-11-10/probe.cjs). This violates
+the PRD's no-skips-under-concurrent-inserts criterion and is not fixed. A safe
+fix needs a commit-ordered pagination strategy and a regression test; measure its
+impact on write throughput before declaring the service ready.
+
+**Surprises and remaining concerns:** A row-lock experiment showed that Postgres
+`now()` can remain fixed while a completion waits past its lease; the lease checks
+now acquire the lock before consulting the database clock, with regression tests.
+The first chaos and mutation rehearsals also exposed weaknesses in the test setup
+itself. Remaining concerns include the confirmed pagination skip, whether the full fault and load runs satisfy
+all invariants, whether outbox lag stays flat at sustained load, the cost of a
+Postgres version read on cache hits, database and network failures outside this
+single-host harness, and unbounded event and execution history. Do not infer a
+production guarantee from a small smoke run.
+
+A production dependency audit reports one high-severity Zod advisory
+([GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5)) for
+the installed Zod 3 release; the reported fix requires a major-version upgrade.
+That upgrade has not been tested, and the finding remains open.

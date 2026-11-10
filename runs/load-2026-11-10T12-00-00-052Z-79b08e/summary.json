@@ -1,0 +1,48 @@
+{
+  "run": "load-2026-11-10T12-00-00-052Z-79b08e",
+  "seed": 3,
+  "project": "soupload4e0db3c6a861",
+  "seconds": 5,
+  "targetRps": 10,
+  "status": "passed",
+  "startedAt": "2026-11-10T12:00:00.054Z",
+  "errors": [],
+  "limits": [
+    "Workload uses simulated 20ms jobs, 70% creates, 20% reads, 10% cancels; target distribution may differ while no IDs exist.",
+    "Seed fixes operation choices; request completion order and selected job IDs depend on scheduling.",
+    "Outbox lag flatness needs inspection of the retained samples; there is no PRD numeric threshold."
+  ],
+  "results": {
+    "plannedRequests": 50,
+    "sent": 50,
+    "succeeded": 50,
+    "dropped": 0,
+    "sendingSeconds": 4.900277751999995,
+    "actualRps": 10.203503256441545,
+    "p50Ms": 8.373875999997836,
+    "p99Ms": 140.3952389999904,
+    "atEnd": {
+      "queued": 0,
+      "running": 0,
+      "outboxPending": 4,
+      "outboxAge": 0.015735
+    },
+    "final": {
+      "queued": 0,
+      "running": 0,
+      "outboxPending": 0,
+      "outboxAge": 0
+    },
+    "drainSeconds": 2.010881534999993,
+    "sampleCount": 5,
+    "outboxAgeMaxSeconds": 0.250222
+  },
+  "checks": {
+    "allRequestsCompleted": true,
+    "p99Under200ms": true,
+    "reachedTargetRps": true,
+    "queueAndOutboxDrained": true,
+    "noErrors": true
+  },
+  "finishedAt": "2026-11-10T12:01:39.294Z"
+}
