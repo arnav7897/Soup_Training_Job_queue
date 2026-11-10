@@ -34,6 +34,12 @@ services:
       db: { condition: service_healthy }
       redis: { condition: service_healthy }
       migrate: { condition: service_completed_successfully }
+  relay:
+    build: .
+    command: ["node", "dist/relay.js"]
+    environment: *app_env
+    depends_on: *dependencies
+    restart: unless-stopped
   worker:
     deploy:
       replicas: 8

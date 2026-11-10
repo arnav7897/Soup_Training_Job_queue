@@ -34,7 +34,7 @@ export async function claim(pool: Pool, worker: string, leaseMs: number): Promis
 }
 
 export async function heartbeat(pool: Pool, job: Claim, worker: string, leaseMs: number): Promise<boolean> {
-  const result = await pool.query(`UPDATE jobs SET lease_expires_at=now()+$4 * interval '1 millisecond', updated_at=now()
+  const result = await pool.query(`UPDATE jobs SET lease_expires_at=now()+$4 * interval '1 millisecond', updated_at=now(), version=version+1
     WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>now()`,
   [job.id, job.lease_epoch, worker, leaseMs]);
   return result.rowCount === 1;
