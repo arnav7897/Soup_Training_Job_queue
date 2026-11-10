@@ -1,0 +1,34 @@
+{
+  "startedAt": "2026-11-10T12:37:34.013Z",
+  "note": "Probe retries serialization/deadlock errors; the application itself does not implement these retries.",
+  "results": {
+    "read_committed": {
+      "claims": 200,
+      "retries": 0,
+      "serializationFailures": 0,
+      "deadlocks": 0,
+      "attempts": 550,
+      "errors": [],
+      "raceFailures": 0,
+      "duplicateClaims": 0,
+      "unfinished": 0,
+      "retryRate": 0,
+      "status": "passed"
+    },
+    "serializable": {
+      "claims": 200,
+      "retries": 6520,
+      "serializationFailures": 6520,
+      "deadlocks": 0,
+      "attempts": 7070,
+      "errors": [],
+      "raceFailures": 49,
+      "duplicateClaims": 0,
+      "unfinished": 0,
+      "retryRate": 0.9222065063649222,
+      "status": "failed"
+    }
+  },
+  "status": "failed",
+  "finishedAt": "2026-11-10T12:37:43.372Z"
+}

@@ -1,0 +1,14 @@
+                                                             QUERY PLAN                                                              
+-------------------------------------------------------------------------------------------------------------------------------------
+ Limit  (cost=0.29..0.37 rows=1 width=135) (actual time=11.784..11.786 rows=1 loops=1)
+   Buffers: shared hit=38296
+   ->  Index Scan using outbox_pkey on outbox  (cost=0.29..6802.54 rows=88017 width=135) (actual time=11.783..11.783 rows=1 loops=1)
+         Filter: (published_at IS NULL)
+         Rows Removed by Filter: 39844
+         Buffers: shared hit=38296
+ Planning:
+   Buffers: shared hit=105
+ Planning Time: 1.392 ms
+ Execution Time: 11.860 ms
+(10 rows)
+
