@@ -9,7 +9,8 @@ exercise; simulated jobs stand in for real model training.
 > **Status: in development.** The API supports job creation, lookup, listing and
 > cancellation backed by Postgres. Eight workers execute simulated jobs with
 > leases, fenced completion and recovery. `GET /health` reports process liveness
-> only. The outbox relay publishes Redis Stream events and status reads use a
+> only; `/metrics` reports database-backed queue metrics. The outbox relay
+> publishes Redis Stream events and status reads use a
 > version-checked cache. Chaos and load-test guarantees remain unverified.
 
 ## The problem
@@ -95,6 +96,19 @@ Once the API starts, check its liveness:
 curl http://localhost:3000/health
 ```
 
+Inspect queue metrics and structured service logs:
+
+```sh
+curl http://localhost:3000/metrics
+docker compose logs -f worker relay
+```
+
+Metrics include job states, claims, completion fence rejections, expired leases,
+and unpublished outbox count and age. Claims come from execution records; the
+rejection and expiry counters begin at zero when the metrics migration is applied.
+`/health` only checks process liveness; `/metrics` returns 503 if Postgres is down.
+See [DESIGN.md](DESIGN.md) for guarantees and limitations.
+
 Stop the services with `docker compose down`. Postgres data persists in a Docker
 volume; `docker compose down -v` also deletes that data.
 
@@ -110,10 +124,10 @@ npm start
 ```
 
 Run `npm run typecheck`, `npm run lint`, and `npm test` after building. With Postgres and Redis running and the same environment variables set, run
-`npm run test:integration` to check connectivity to both services.
+`npm run test:integration` for the service and race tests. This enforces 85%
+coverage for the current queue module, not the entire application.
 
 ## What's next
 
-The next milestones complete job API verification, observability, and reproducible
-failure testing. The goal is a queue whose behavior
+The next milestones complete job API verification and reproducible failure testing. The goal is a queue whose behavior
 under failure can be explained and measured, not just a happy-path demo.

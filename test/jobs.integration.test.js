@@ -9,6 +9,7 @@ test('job creation, replay, validation, pagination and cancellation', async () =
   await admin.query(`CREATE SCHEMA "${schema}"`);
   const pool = new Pool({ connectionString: process.env.DATABASE_URL, options: `-c search_path=${schema}` });
   await pool.query(readFileSync('migrations/001_initial.sql', 'utf8'));
+    await pool.query(readFileSync('migrations/002_metrics.sql', 'utf8'));
   const app = buildApp(pool);
   const key = randomUUID();
   const payload = { name: 'test', model: 'gpt2-small', params: { epochs: 1, batchSize: 4, learningRate: 0.01, durationMs: 0 } };

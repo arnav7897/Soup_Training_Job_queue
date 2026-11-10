@@ -18,6 +18,7 @@ test('relay duplicates, stale cache writes and Redis outage fallback', async () 
   try {
     await redis.connect();
     await pool.query(readFileSync('migrations/001_initial.sql', 'utf8'));
+    await pool.query(readFileSync('migrations/002_metrics.sql', 'utf8'));
     await pool.query(`INSERT INTO jobs(id,idempotency_key,request_hash,name,model,params)
       VALUES($1,$2,'hash','test','gpt2-small','{}')`, [id, id]);
     const old = { id, version: 1, status: 'queued' };

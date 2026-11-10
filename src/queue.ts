@@ -46,7 +46,10 @@ export async function complete(pool: Pool, job: Claim, worker: string): Promise<
       lease_owner=NULL, lease_expires_at=NULL, updated_at=now(), finished_at=now()
       WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>now()
       RETURNING id,status,version`, [job.id, job.lease_epoch, worker]);
-    if (!result.rowCount) return false;
+    if (!result.rowCount) {
+      await client.query("UPDATE queue_counters SET value=value+1 WHERE name='fence_rejections'");
+      return false;
+    }
     await client.query('INSERT INTO effects(job_id,worker_id,lease_epoch) VALUES($1,$2,$3)', [job.id, worker, job.lease_epoch]);
     await event(client, result.rows[0]);
     return true;
@@ -61,6 +64,7 @@ export async function reap(pool: Pool): Promise<number> {
       WHERE id IN (SELECT id FROM jobs WHERE status='running' AND lease_expires_at<=now()
         ORDER BY lease_expires_at FOR UPDATE SKIP LOCKED LIMIT 100)
       RETURNING id,status,version`);
+    if (result.rowCount) await client.query("UPDATE queue_counters SET value=value+$1 WHERE name='lease_expiries'", [result.rowCount]);
     for (const job of result.rows) await event(client, job);
     return result.rowCount ?? 0;
   });
