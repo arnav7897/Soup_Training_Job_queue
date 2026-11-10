@@ -5,6 +5,7 @@ const schema = z.object({
   HOST: z.string().min(1).default('0.0.0.0'),
   DATABASE_URL: z.string().url(),
   REDIS_URL: z.string().url(),
+  LEASE_MS: z.coerce.number().int().min(300).max(3600000).default(9000),
 });
 
 export function loadConfig(env: NodeJS.ProcessEnv) {
