@@ -32,3 +32,23 @@ export async function claim(pool: Pool, worker: string, leaseMs: number): Promis
     return job;
   });
 }
+
+export async function heartbeat(pool: Pool, job: Claim, worker: string, leaseMs: number): Promise<boolean> {
+  const result = await pool.query(`UPDATE jobs SET lease_expires_at=now()+$4 * interval '1 millisecond', updated_at=now()
+    WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>now()`,
+  [job.id, job.lease_epoch, worker, leaseMs]);
+  return result.rowCount === 1;
+}
+
+export async function complete(pool: Pool, job: Claim, worker: string): Promise<boolean> {
+  return transaction(pool, async client => {
+    const result = await client.query(`UPDATE jobs SET status='succeeded', version=version+1,
+      lease_owner=NULL, lease_expires_at=NULL, updated_at=now(), finished_at=now()
+      WHERE id=$1 AND lease_epoch=$2 AND lease_owner=$3 AND status='running' AND lease_expires_at>now()
+      RETURNING id,status,version`, [job.id, job.lease_epoch, worker]);
+    if (!result.rowCount) return false;
+    await client.query('INSERT INTO effects(job_id,worker_id,lease_epoch) VALUES($1,$2,$3)', [job.id, worker, job.lease_epoch]);
+    await event(client, result.rows[0]);
+    return true;
+  });
+}
