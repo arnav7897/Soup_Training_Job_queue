@@ -28,8 +28,10 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     expect(await heartbeat(pool, first, owner, 10000)).toBe(true);
     expect((await pool.query('SELECT version FROM jobs WHERE id=$1', [id])).rows[0].version).toBe(initialVersion + 1);
     await pool.query("UPDATE jobs SET lease_expires_at=now()-interval '1 second' WHERE id=$1", [id]);
+    expect(await heartbeat(pool, first, owner, 10000)).toBe(false);
     expect(await complete(pool, first, owner)).toBe(false);
     expect(await reap(pool)).toBe(1);
+    expect(await reap(pool)).toBe(0);
     const second = await claim(pool, 'new', 10000);
     expect(second.lease_epoch).toBeGreaterThan(first.lease_epoch);
     expect(await complete(pool, first, owner)).toBe(false);
@@ -57,6 +59,14 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
       expect(cancel.statusCode).toBe(finish ? 409 : 200);
     }
 
+    const rollbackId = await insert();
+    const rollbackJob = await claim(pool, 'rollback', 10000);
+    await pool.query('INSERT INTO effects(job_id,worker_id,lease_epoch) VALUES($1,$2,$3)', [rollbackId, 'existing', 1]);
+    await expect(complete(pool, rollbackJob, 'rollback')).rejects.toThrow();
+    expect((await pool.query('SELECT status FROM jobs WHERE id=$1', [rollbackId])).rows[0].status).toBe('running');
+    await pool.query('DELETE FROM effects WHERE job_id=$1', [rollbackId]);
+    await app.inject({ method: 'POST', url: `/jobs/${rollbackId}/cancel` });
+
     await Promise.all(Array.from({ length: 200 }, () => insert()));
     const claimed = [];
     await Promise.all(Array.from({ length: 50 }, async (_, i) => {
@@ -76,6 +86,14 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     await pool.query("UPDATE jobs SET lease_expires_at=now()-interval '1 second' WHERE id=$1", [exhausted]);
     await reap(pool);
     expect((await pool.query('SELECT status FROM jobs WHERE id=$1', [exhausted])).rows[0].status).toBe('failed');
+    const response = await app.inject({ url: '/metrics' });
+    expect(response.statusCode).toBe(200);
+    expect(response.headers['content-type']).toContain('text/plain');
+    expect(response.body).toContain('queue_lease_expiries_total 2');
+    expect(response.body).toMatch(/queue_fence_rejections_total [3-9][0-9]*/);
+    expect(response.body).toMatch(/queue_claims_total [0-9]+/);
+    expect(response.body).toContain('queue_jobs{state="failed"} 1');
+    expect(response.body).toMatch(/queue_outbox_oldest_age_seconds [0-9.]+/);
   } finally {
     await app.close();
     await pool.end();

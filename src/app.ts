@@ -23,7 +23,7 @@ export function buildApp(pool: Pool, redis?: Redis) {
   });
   app.get('/health', async () => ({ status: 'ok' }));
   app.get('/metrics', async (_req, reply) => {
-    try { return reply.type('text/plain; version=0.0.4; charset=utf-8').send(await metrics(pool)); }
+    try { const body = await metrics(pool); return reply.type('text/plain; version=0.0.4; charset=utf-8').send(body); }
     catch (err) { app.log.error(err); return reply.code(503).send(error('UNAVAILABLE', 'Metrics database unavailable')); }
   });
   app.post('/jobs', async (req, reply) => {
