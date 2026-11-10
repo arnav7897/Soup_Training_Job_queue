@@ -4,6 +4,7 @@ import { createHash, randomUUID } from 'node:crypto';
 import { z } from 'zod';
 import Redis from 'ioredis';
 import { cachedJob, cacheJob } from './cache';
+import { metrics } from './metrics';
 
 const bodySchema = z.object({ name: z.string().trim().min(1).max(100), model: z.enum(['resnet50', 'bert-base', 'gpt2-small', 'custom']), params: z.object({ epochs: z.number().int().min(1).max(10000), batchSize: z.number().int().min(1).max(4096), learningRate: z.number().gt(0).max(1), durationMs: z.number().int().min(0).max(60000) }).strict() }).strict();
 const idSchema = z.string().uuid();
@@ -21,6 +22,10 @@ export function buildApp(pool: Pool, redis?: Redis) {
     return reply.code(status).send(error(status === 500 ? 'INTERNAL' : 'VALIDATION', status === 500 ? 'Internal server error' : e.message));
   });
   app.get('/health', async () => ({ status: 'ok' }));
+  app.get('/metrics', async (_req, reply) => {
+    try { return reply.type('text/plain; version=0.0.4; charset=utf-8').send(await metrics(pool)); }
+    catch (err) { app.log.error(err); return reply.code(503).send(error('UNAVAILABLE', 'Metrics database unavailable')); }
+  });
   app.post('/jobs', async (req, reply) => {
     const body = bodySchema.safeParse(req.body);
     const key = keySchema.safeParse(req.headers['idempotency-key']);

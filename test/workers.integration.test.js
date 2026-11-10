@@ -18,6 +18,7 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
   };
   try {
     await pool.query(readFileSync('migrations/001_initial.sql', 'utf8'));
+    await pool.query(readFileSync('migrations/002_metrics.sql', 'utf8'));
     const id = await insert();
     const claims = (await Promise.all(Array.from({ length: 50 }, (_, i) => claim(pool, `w${i}`, 10000)))).filter(Boolean);
     expect(claims).toHaveLength(1);
