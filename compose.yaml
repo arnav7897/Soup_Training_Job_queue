@@ -35,6 +35,8 @@ services:
       redis: { condition: service_healthy }
       migrate: { condition: service_completed_successfully }
   worker:
+    deploy:
+      replicas: 8
     build: .
     command: ["node", "dist/worker.js"]
     environment: *app_env
