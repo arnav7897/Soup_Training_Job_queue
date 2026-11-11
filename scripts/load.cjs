@@ -38,7 +38,7 @@ async function saveComposeLogs() {
   } finally { fs.closeSync(fd); }
 }
 async function main() {
-  const summary = { run, seed, project, seconds, targetRps: rate, status: 'failed', startedAt: new Date().toISOString(), errors: [], limits: ['Workload uses simulated 20ms jobs, 70% creates, 20% reads, 10% cancels; target distribution may differ while no IDs exist.', 'Seed fixes operation choices; request completion order and selected job IDs depend on scheduling.', 'Outbox lag flatness needs inspection of the retained samples; there is no PRD numeric threshold.'] };
+  const summary = { run, seed, project, seconds, targetRps: rate, status: 'failed', startedAt: new Date().toISOString(), errors: [], limits: ['Workload uses simulated 20ms jobs, 70% creates, 20% reads, 10% cancels; target distribution may differ while no IDs exist.', 'Seed fixes operation choices; request completion order and selected job IDs depend on scheduling.', 'The assessment specifies 100 requests/second but no latency limit; the 200 ms p99 check is a project target.'] };
   const ids = []; const latencies = []; const pending = new Set(); const samples = [];
   let sent = 0; let succeeded = 0; let dropped = 0; let stopSampling = false; let sampler; let started = false;
   try {
@@ -51,7 +51,7 @@ async function main() {
         const response = await fetch(`${base}/metrics`, { signal: AbortSignal.timeout(10000) });
         if (!response.ok) throw Error(`metrics ${response.status}`);
         const text = await response.text();
-        const sample = { queued: gauge(text, /queue_jobs\{state="queued"\} ([0-9.]+)/), running: gauge(text, /queue_jobs\{state="running"\} ([0-9.]+)/), outboxPending: gauge(text, /queue_outbox_pending ([0-9.]+)/), outboxAge: gauge(text, /queue_outbox_oldest_age_seconds ([0-9.]+)/) };
+        const sample = { queued: gauge(text, /queue_jobs\{state="queued"\} ([0-9.]+)/), running: gauge(text, /queue_jobs\{state="running"\} ([0-9.]+)/) };
         if (Object.values(sample).some(value => value === null)) throw Error('missing metrics');
         samples.push(sample); record('sample', sample);
       } catch (error) { summary.errors.push(`sample: ${error}`); record('sample_error', { error: String(error) }); }
@@ -87,15 +87,15 @@ async function main() {
     const drainStart = performance.now();
     while (performance.now() - drainStart < 120000) {
       await sample(); const current = samples.at(-1);
-      if (current && current.queued === 0 && current.running === 0 && current.outboxPending === 0) break;
+      if (current && current.queued === 0 && current.running === 0) break;
       await sleep(2000);
     }
     const final = samples.at(-1);
     const sorted = latencies.sort((a, b) => a - b);
-    summary.results = { plannedRequests: total, sent, succeeded, dropped, sendingSeconds, actualRps: sent / sendingSeconds, p50Ms: percentile(sorted, 0.5), p99Ms: percentile(sorted, 0.99), atEnd, final, drainSeconds: (performance.now() - drainStart) / 1000, sampleCount: samples.length, outboxAgeMaxSeconds: samples.length ? Math.max(...samples.map(sample => sample.outboxAge)) : null };
-    summary.checks = { allRequestsCompleted: sent === total && succeeded === total && dropped === 0, p99Under200ms: summary.results.p99Ms !== null && summary.results.p99Ms < 200, reachedTargetRps: summary.results.actualRps >= rate * 0.99, queueAndOutboxDrained: !!final && final.queued === 0 && final.running === 0 && final.outboxPending === 0, noErrors: summary.errors.length === 0 };
+    summary.results = { plannedRequests: total, sent, succeeded, dropped, sendingSeconds, actualRps: sent / sendingSeconds, p50Ms: percentile(sorted, 0.5), p99Ms: percentile(sorted, 0.99), atEnd, final, drainSeconds: (performance.now() - drainStart) / 1000, sampleCount: samples.length };
+    summary.checks = { allRequestsCompleted: sent === total && succeeded === total && dropped === 0, p99Under200ms: summary.results.p99Ms !== null && summary.results.p99Ms < 200, reachedTargetRps: summary.results.actualRps >= rate * 0.99, queueDrained: !!final && final.queued === 0 && final.running === 0, noErrors: summary.errors.length === 0 };
     summary.status = Object.values(summary.checks).every(Boolean) ? 'requires_review' : 'failed';
-    summary.manualReview = 'Assess outbox lag flatness and drain rate from retained samples before a ship verdict.';
+    summary.manualReview = 'Review latency distribution and queue drain against the project target before a ship verdict.';
   } catch (error) { summary.errors.push(String(error)); record('run_error', { error: String(error) }); }
   finally {
     stopSampling = true; if (sampler) await sampler;

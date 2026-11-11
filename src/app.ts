@@ -2,8 +2,6 @@ import Fastify from 'fastify';
 import { Pool } from 'pg';
 import { createHash, randomUUID } from 'node:crypto';
 import { z } from 'zod';
-import Redis from 'ioredis';
-import { cachedJob, cacheJob } from './cache';
 import { metrics } from './metrics';
 
 const bodySchema = z.object({ name: z.string().trim().min(1).max(100), model: z.enum(['resnet50', 'bert-base', 'gpt2-small', 'custom']), params: z.object({ epochs: z.number().int().min(1).max(10000), batchSize: z.number().int().min(1).max(4096), learningRate: z.number().gt(0).max(1), durationMs: z.number().int().min(0).max(60000) }).strict() }).strict();
@@ -14,7 +12,7 @@ const columns = `id, name, model, params, status, attempts, max_attempts, lease_
 const cursorTime = `to_char(created_at AT TIME ZONE 'UTC', 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') AS cursor_time`;
 function error(code: string, message: string, details: unknown = null) { return { error: { code, message, details } }; }
 
-export function buildApp(pool: Pool, redis?: Redis) {
+export function buildApp(pool: Pool) {
   const app = Fastify({ logger: true, bodyLimit: 16384 });
   app.setErrorHandler((err, _req, reply) => {
     const e = err as Error & { statusCode?: number };
@@ -38,7 +36,6 @@ export function buildApp(pool: Pool, redis?: Redis) {
       const inserted = await client.query(`INSERT INTO jobs(id,idempotency_key,request_hash,name,model,params) VALUES($1,$2,$3,$4,$5,$6) ON CONFLICT(idempotency_key) DO NOTHING RETURNING ${columns}`, [randomUUID(), key.data, hash, body.data.name, body.data.model, JSON.stringify(body.data.params)]);
       if (inserted.rowCount) {
         const job = inserted.rows[0];
-        await client.query('INSERT INTO outbox(type,job_id,payload) VALUES($1,$2,$3)', ['job.queued', job.id, JSON.stringify({ jobId: job.id, status: job.status, version: job.version })]);
         await client.query('COMMIT');
         return reply.code(201).send(job);
       }
@@ -52,15 +49,8 @@ export function buildApp(pool: Pool, redis?: Redis) {
   app.get('/jobs/:id', async (req, reply) => {
     const id = idSchema.safeParse((req.params as { id: string }).id);
     if (!id.success) return reply.code(400).send(error('VALIDATION', 'Invalid job ID'));
-    if (redis) {
-      const current = await pool.query('SELECT version FROM jobs WHERE id=$1', [id.data]);
-      if (!current.rowCount) return reply.code(404).send(error('NOT_FOUND', 'Job not found'));
-      const cached = await cachedJob(redis, id.data, current.rows[0].version);
-      if (cached) return cached;
-    }
     const result = await pool.query(`SELECT ${columns} FROM jobs WHERE id=$1`, [id.data]);
     if (!result.rowCount) return reply.code(404).send(error('NOT_FOUND', 'Job not found'));
-    if (redis) await cacheJob(redis, result.rows[0]);
     return result.rows[0];
   });
   app.get('/jobs', async (req, reply) => {
@@ -90,10 +80,8 @@ export function buildApp(pool: Pool, redis?: Redis) {
       await client.query('BEGIN');
       const result = await client.query(`UPDATE jobs SET status='cancelled', lease_epoch=lease_epoch+1, version=version+1, updated_at=now(), finished_at=now() WHERE id=$1 AND status IN ('queued','running') RETURNING ${columns}`, [id.data]);
       if (result.rowCount) {
-        const job = result.rows[0];
-        await client.query('INSERT INTO outbox(type,job_id,payload) VALUES($1,$2,$3)', ['job.cancelled', job.id, JSON.stringify({ jobId: job.id, status: job.status, version: job.version })]);
         await client.query('COMMIT');
-        return job;
+        return result.rows[0];
       }
       const existing = await client.query(`SELECT ${columns} FROM jobs WHERE id=$1`, [id.data]);
       await client.query('COMMIT');

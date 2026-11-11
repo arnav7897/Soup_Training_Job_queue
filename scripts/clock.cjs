@@ -21,12 +21,21 @@ function record(type, fields = {}) { raw.write(JSON.stringify({ time: new Date()
 const args = ['compose','-p',project,'-f',path.join(root,'compose.yaml'),'-f',override];
 async function docker(...commands) { const r = await exec('docker', [...args, ...commands], { cwd: root, timeout: 300000, maxBuffer: 16*1024*1024 }); record('command', { commands, stdout:r.stdout, stderr:r.stderr }); return r.stdout.trim(); }
 async function saveLogs() { const fd=fs.openSync(path.join(dir,'compose.log'),'wx'); try { await new Promise((resolve,reject)=>{const child=spawn('docker',[...args,'logs','--no-color','--timestamps'],{cwd:root,stdio:['ignore',fd,fd]});child.on('error',reject);child.on('close',code=>code===0?resolve():reject(Error(`logs exited ${code}`)));}); } finally { fs.closeSync(fd); } }
+async function waitForApi(base) {
+  for (let attempt = 0; attempt < 60; attempt++) {
+    try { if ((await fetch(`${base}/health`, { signal: AbortSignal.timeout(1000) })).ok) return; }
+    catch { /* API may still be starting. */ }
+    await sleep(500);
+  }
+  throw Error('API did not become healthy within 30 seconds');
+}
 async function main() {
   const summary = { run, project, status:'failed', startedAt:new Date().toISOString(), errors:[], checks:{} };
   try {
     await docker('up','-d','--build');
     const port=(await docker('port','api','3000')).match(/:(\d+)$/);
     if (!port) throw Error('API port unavailable');
+    await waitForApi(`http://127.0.0.1:${port[1]}`);
     const fakeNow=Number(await docker('exec','-T','worker','node','-e','console.log(Date.now())'));
     const offsetSeconds=(fakeNow-Date.now())/1000;
     const response=await fetch(`http://127.0.0.1:${port[1]}/jobs`,{method:'POST',headers:{'content-type':'application/json','idempotency-key':run},body:JSON.stringify({name:'clock-probe',model:'gpt2-small',params:{epochs:1,batchSize:1,learningRate:0.01,durationMs:4000}})});

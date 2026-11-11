@@ -30,7 +30,7 @@ async function scenario(level, admin) {
     throw Error('retry limit exceeded');
   }
   try {
-    for (const file of ['001_initial.sql','002_metrics.sql','003_commit_order_and_outbox_index.sql']) await pool.query(fs.readFileSync(path.join(__dirname, '..', 'migrations', file), 'utf8'));
+    for (const file of ['001_initial.sql','002_metrics.sql','003_commit_order_and_outbox_index.sql','004_remove_global_creation_lock.sql']) await pool.query(fs.readFileSync(path.join(__dirname, '..', 'migrations', file), 'utf8'));
     counters.isolation = (await pool.query('SHOW default_transaction_isolation')).rows[0].default_transaction_isolation;
     const expectedIsolation = level === 'serializable' ? 'serializable' : 'read committed';
     if (counters.isolation !== expectedIsolation) throw Error(`Expected ${expectedIsolation}, got ${counters.isolation}`);
@@ -67,11 +67,10 @@ async function scenario(level, admin) {
 }
 (async () => {
   const admin = new Pool({ connectionString: process.env.DATABASE_URL });
-  const summary = { startedAt: new Date().toISOString(), note: 'Probe retries serialization/deadlock errors; the application itself does not implement these retries.', results: {} };
+  const summary = { startedAt: new Date().toISOString(), note: 'The service uses READ COMMITTED. SERIALIZABLE is not an application-supported mode and is not included in this probe.', results: {} };
   try {
     summary.results.read_committed = await scenario('read\\ committed', admin);
-    summary.results.serializable = await scenario('serializable', admin);
-    summary.status = Object.values(summary.results).every(result => result.status === 'passed') ? 'passed' : 'failed';
+    summary.status = summary.results.read_committed.status;
   } catch (error) { summary.status = 'failed'; summary.error = String(error); }
   finally {
     await admin.end(); summary.finishedAt = new Date().toISOString();

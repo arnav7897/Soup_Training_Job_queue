@@ -21,6 +21,7 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     await pool.query(readFileSync('migrations/001_initial.sql', 'utf8'));
     await pool.query(readFileSync('migrations/002_metrics.sql', 'utf8'));
     await pool.query(readFileSync('migrations/003_commit_order_and_outbox_index.sql', 'utf8'));
+    await pool.query(readFileSync('migrations/004_remove_global_creation_lock.sql', 'utf8'));
     const id = await insert();
     const claims = (await Promise.all(Array.from({ length: 50 }, (_, i) => claim(pool, `w${i}`, 10000)))).filter(Boolean);
     expect(claims).toHaveLength(1);
@@ -112,7 +113,7 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     expect(Number(rejected?.[1])).toBeGreaterThanOrEqual(3);
     expect(response.body).toMatch(/queue_claims_total [0-9]+/);
     expect(response.body).toContain('queue_jobs{state="failed"} 1');
-    expect(response.body).toMatch(/queue_outbox_oldest_age_seconds [0-9.]+/);
+    expect(response.body).not.toContain('queue_outbox_pending');
   } finally {
     await app.close();
     await pool.end();

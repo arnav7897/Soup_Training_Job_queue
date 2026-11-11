@@ -1,0 +1,77 @@
+worker-1  | 2026-11-11T08:07:54.638112247Z {"time":"2026-11-12T08:07:54.635Z","level":"info","component":"worker","event":"job_claimed","worker":"742553a4-2c39-4bf0-9f63-b1f316593f0a","job":"5a97646e-3793-4463-a6de-536f03f2c8b0","epoch":1}
+worker-1  | 2026-11-11T08:07:58.659707527Z {"time":"2026-11-12T08:07:58.658Z","level":"info","component":"worker","event":"job_completed","worker":"742553a4-2c39-4bf0-9f63-b1f316593f0a","job":"5a97646e-3793-4463-a6de-536f03f2c8b0","epoch":1}
+db-1      | 2026-11-11T08:07:46.178294190Z The files belonging to this database system will be owned by user "postgres".
+db-1      | 2026-11-11T08:07:46.178375614Z This user must also own the server process.
+db-1      | 2026-11-11T08:07:46.178385097Z 
+db-1      | 2026-11-11T08:07:46.178390071Z The database cluster will be initialized with locale "en_US.utf8".
+db-1      | 2026-11-11T08:07:46.178395066Z The default database encoding has accordingly been set to "UTF8".
+db-1      | 2026-11-11T08:07:46.178399662Z The default text search configuration will be set to "english".
+db-1      | 2026-11-11T08:07:46.178404146Z 
+db-1      | 2026-11-11T08:07:46.178408104Z Data page checksums are disabled.
+db-1      | 2026-11-11T08:07:46.178425582Z 
+db-1      | 2026-11-11T08:07:46.178657952Z fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1      | 2026-11-11T08:07:46.183480672Z creating subdirectories ... ok
+db-1      | 2026-11-11T08:07:46.183566275Z selecting dynamic shared memory implementation ... posix
+db-1      | 2026-11-11T08:07:46.218146102Z selecting default max_connections ... 100
+db-1      | 2026-11-11T08:07:46.272758412Z selecting default shared_buffers ... 128MB
+db-1      | 2026-11-11T08:07:46.337743719Z selecting default time zone ... UTC
+db-1      | 2026-11-11T08:07:46.338837616Z creating configuration files ... ok
+db-1      | 2026-11-11T08:07:46.621119773Z running bootstrap script ... ok
+db-1      | 2026-11-11T08:07:46.952805808Z sh: locale: not found
+db-1      | 2026-11-11T08:07:46.952857601Z 2026-11-11 08:07:46.952 UTC [35] WARNING:  no usable system locales were found
+db-1      | 2026-11-11T08:07:47.481748445Z performing post-bootstrap initialization ... ok
+db-1      | 2026-11-11T08:07:47.671780106Z syncing data to disk ... ok
+db-1      | 2026-11-11T08:07:47.671816335Z initdb: warning: enabling "trust" authentication for local connections
+db-1      | 2026-11-11T08:07:47.671856962Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1      | 2026-11-11T08:07:47.671839272Z 
+db-1      | 2026-11-11T08:07:47.671870067Z 
+db-1      | 2026-11-11T08:07:47.671873357Z Success. You can now start the database server using:
+db-1      | 2026-11-11T08:07:47.671876519Z 
+db-1      | 2026-11-11T08:07:47.671879227Z     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1      | 2026-11-11T08:07:47.671882449Z 
+db-1      | 2026-11-11T08:07:47.789604516Z waiting for server to start....2026-11-11 08:07:47.789 UTC [41] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1      | 2026-11-11T08:07:47.793030287Z 2026-11-11 08:07:47.792 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1      | 2026-11-11T08:07:47.805237140Z 2026-11-11 08:07:47.805 UTC [44] LOG:  database system was shut down at 2026-11-11 08:07:47 UTC
+db-1      | 2026-11-11T08:07:47.817855039Z 2026-11-11 08:07:47.817 UTC [41] LOG:  database system is ready to accept connections
+db-1      | 2026-11-11T08:07:47.837978899Z  done
+db-1      | 2026-11-11T08:07:47.838015904Z server started
+db-1      | 2026-11-11T08:07:47.990701922Z CREATE DATABASE
+db-1      | 2026-11-11T08:07:47.992176197Z 
+db-1      | 2026-11-11T08:07:47.992202766Z 
+db-1      | 2026-11-11T08:07:47.992314081Z /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-1      | 2026-11-11T08:07:47.992323125Z 
+db-1      | 2026-11-11T08:07:47.994237975Z waiting for server to shut down....2026-11-11 08:07:47.993 UTC [41] LOG:  received fast shutdown request
+db-1      | 2026-11-11T08:07:47.997756514Z 2026-11-11 08:07:47.997 UTC [41] LOG:  aborting any active transactions
+db-1      | 2026-11-11T08:07:48.003983660Z 2026-11-11 08:07:48.003 UTC [41] LOG:  background worker "logical replication launcher" (PID 47) exited with exit code 1
+db-1      | 2026-11-11T08:07:48.004337653Z 2026-11-11 08:07:48.004 UTC [42] LOG:  shutting down
+db-1      | 2026-11-11T08:07:48.007629595Z 2026-11-11 08:07:48.007 UTC [42] LOG:  checkpoint starting: shutdown immediate
+db-1      | 2026-11-11T08:07:48.093701482Z 2026-11-11 08:07:48.093 UTC [42] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.041 s, sync=0.036 s, total=0.090 s; sync files=301, longest=0.007 s, average=0.001 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D58, redo lsn=0/1925D58
+db-1      | 2026-11-11T08:07:48.107827664Z 2026-11-11 08:07:48.107 UTC [41] LOG:  database system is shut down
+db-1      | 2026-11-11T08:07:48.195923650Z  done
+db-1      | 2026-11-11T08:07:48.195989304Z server stopped
+db-1      | 2026-11-11T08:07:48.198576619Z 
+db-1      | 2026-11-11T08:07:48.198672206Z PostgreSQL init process complete; ready for start up.
+db-1      | 2026-11-11T08:07:48.198679377Z 
+db-1      | 2026-11-11T08:07:48.243610212Z 2026-11-11 08:07:48.243 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1      | 2026-11-11T08:07:48.243693748Z 2026-11-11 08:07:48.243 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1      | 2026-11-11T08:07:48.243703084Z 2026-11-11 08:07:48.243 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1      | 2026-11-11T08:07:48.250774499Z 2026-11-11 08:07:48.250 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1      | 2026-11-11T08:07:48.260347399Z 2026-11-11 08:07:48.260 UTC [57] LOG:  database system was shut down at 2026-11-11 08:07:48 UTC
+db-1      | 2026-11-11T08:07:48.274963531Z 2026-11-11 08:07:48.274 UTC [1] LOG:  database system is ready to accept connections
+db-1      | 2026-11-11T08:07:52.282886440Z 2026-11-11 08:07:52.282 UTC [68] WARNING:  there is no transaction in progress
+api-1     | 2026-11-11T08:07:53.529878775Z {"level":30,"time":1794384473527,"pid":1,"hostname":"ba24cf4bfaa4","msg":"Server listening at http://127.0.0.1:3000"}
+api-1     | 2026-11-11T08:07:53.531269323Z {"level":30,"time":1794384473529,"pid":1,"hostname":"ba24cf4bfaa4","msg":"Server listening at http://172.20.0.4:3000"}
+api-1     | 2026-11-11T08:07:53.774677877Z {"level":30,"time":1794384473773,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-1","req":{"method":"GET","url":"/health","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:53.790822442Z {"level":30,"time":1794384473788,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-1","res":{"statusCode":200},"responseTime":13.509321,"msg":"request completed"}
+api-1     | 2026-11-11T08:07:54.217156051Z {"level":30,"time":1794384474216,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-2","req":{"method":"POST","url":"/jobs","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:54.302938455Z {"level":30,"time":1794384474302,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-2","res":{"statusCode":201},"responseTime":85.50771499999996,"msg":"request completed"}
+api-1     | 2026-11-11T08:07:56.834558202Z {"level":30,"time":1794384476833,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-3","req":{"method":"GET","url":"/jobs/5a97646e-3793-4463-a6de-536f03f2c8b0","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:56.842772325Z {"level":30,"time":1794384476842,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-3","res":{"statusCode":200},"responseTime":8.083821000000171,"msg":"request completed"}
+api-1     | 2026-11-11T08:07:57.348293638Z {"level":30,"time":1794384477347,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-4","req":{"method":"GET","url":"/jobs/5a97646e-3793-4463-a6de-536f03f2c8b0","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:57.352611118Z {"level":30,"time":1794384477351,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-4","res":{"statusCode":200},"responseTime":4.222157999999581,"msg":"request completed"}
+api-1     | 2026-11-11T08:07:57.859344753Z {"level":30,"time":1794384477858,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-5","req":{"method":"GET","url":"/jobs/5a97646e-3793-4463-a6de-536f03f2c8b0","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:57.863393028Z {"level":30,"time":1794384477862,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-5","res":{"statusCode":200},"responseTime":3.7728139999999257,"msg":"request completed"}
+api-1     | 2026-11-11T08:07:58.370274397Z {"level":30,"time":1794384478369,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-6","req":{"method":"GET","url":"/jobs/5a97646e-3793-4463-a6de-536f03f2c8b0","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:58.374001872Z {"level":30,"time":1794384478373,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-6","res":{"statusCode":200},"responseTime":3.7440929999993386,"msg":"request completed"}
+api-1     | 2026-11-11T08:07:58.881499105Z {"level":30,"time":1794384478880,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-7","req":{"method":"GET","url":"/jobs/5a97646e-3793-4463-a6de-536f03f2c8b0","host":"127.0.0.1:33627","remoteAddress":"172.20.0.1","remotePort":61796},"msg":"incoming request"}
+api-1     | 2026-11-11T08:07:58.886438493Z {"level":30,"time":1794384478885,"pid":1,"hostname":"ba24cf4bfaa4","reqId":"req-7","res":{"statusCode":200},"responseTime":4.846150000000307,"msg":"request completed"}

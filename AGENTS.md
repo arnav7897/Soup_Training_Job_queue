@@ -18,7 +18,7 @@ The previous Redis/outbox implementation and its run evidence are historical art
 ## Phase and commit workflow
 
 - Read `plan.md` before implementation. Work in phase order unless the user directs otherwise.
-- Each phase gets its own branch from the reviewed/merged previous phase where possible. The current phase-06 checkout has local uncommitted work; preserve and reconcile it before creating phase 07. Never assume it merged.
-- Make listed microcommits when authorized and possible. Run completion checks and record blockers/results in ignored `plan.md`.
-- Phase 6 evidence is not a ship verdict. Phase 7 must address the measured latency and avoid losing the pagination regression proof.
+- Each phase gets its own branch from the reviewed/merged previous phase where possible. Current work is on `phase/07-postgres-queue`; Phase 6 PR #4 is merged. Preserve any uncommitted Phase 7 work.
+- Make listed microcommits when authorized and possible. Run completion checks and record results in ignored `plan.md`.
+- Phase 7 uses PostgreSQL as queue and source of truth. Keep the documented live-pagination semantics and historical Redis/outbox failures accurate; do not claim snapshot listing or sole Redis causation.
 - CI runs install, lint, typecheck, build, unit, and Postgres integration checks. Long chaos/load evidence runs separately and retains all artifacts. No CD until a deployment target and rollback procedure exist.

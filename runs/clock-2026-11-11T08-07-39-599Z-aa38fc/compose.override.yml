@@ -1,0 +1,15 @@
+services:
+  api:
+    ports: !override
+      - '127.0.0.1::3000'
+  worker:
+    build:
+      context: "/home/arnav/Documents/Soup"
+      dockerfile: "/home/arnav/Documents/Soup/runs/clock-2026-11-11T08-07-39-599Z-aa38fc/Dockerfile.clock"
+    deploy:
+      replicas: 1
+    environment:
+      LEASE_MS: '1200'
+      LD_PRELOAD: /usr/lib/faketime/libfaketime.so.1
+      FAKETIME: '+24h'
+      FAKETIME_DONT_FAKE_MONOTONIC: '1'
