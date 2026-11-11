@@ -10,7 +10,7 @@ const { complete } = require('./dist/queue');
   try {
     await admin.query(`CREATE SCHEMA "${schema}"`);
     pool = new Pool({ connectionString: process.env.DATABASE_URL, options: `-c search_path=${schema}` });
-    for (const file of ['001_initial.sql', '002_metrics.sql']) await pool.query(readFileSync(`migrations/${file}`, 'utf8'));
+    for (const file of ['001_initial.sql', '002_metrics.sql', '003_commit_order_and_outbox_index.sql']) await pool.query(readFileSync(`migrations/${file}`, 'utf8'));
     const id = randomUUID();
     await pool.query(`INSERT INTO jobs(id,idempotency_key,request_hash,name,model,params,status,lease_owner,lease_epoch,lease_expires_at)
       VALUES($1,$2,'probe','probe','custom','{}','running','probe-worker',2,now()+interval '30 seconds')`, [id, id]);

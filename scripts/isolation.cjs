@@ -30,7 +30,7 @@ async function scenario(level, admin) {
     throw Error('retry limit exceeded');
   }
   try {
-    for (const file of ['001_initial.sql','002_metrics.sql']) await pool.query(fs.readFileSync(path.join(__dirname, '..', 'migrations', file), 'utf8'));
+    for (const file of ['001_initial.sql','002_metrics.sql','003_commit_order_and_outbox_index.sql']) await pool.query(fs.readFileSync(path.join(__dirname, '..', 'migrations', file), 'utf8'));
     counters.isolation = (await pool.query('SHOW default_transaction_isolation')).rows[0].default_transaction_isolation;
     const expectedIsolation = level === 'serializable' ? 'serializable' : 'read committed';
     if (counters.isolation !== expectedIsolation) throw Error(`Expected ${expectedIsolation}, got ${counters.isolation}`);
