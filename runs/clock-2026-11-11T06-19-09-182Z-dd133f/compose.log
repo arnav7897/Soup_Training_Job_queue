@@ -1,0 +1,67 @@
+api-1  | 2026-11-11T06:19:27.635281855Z {"level":30,"time":1794377967632,"pid":1,"hostname":"a2b6bf9b095e","msg":"Server listening at http://127.0.0.1:3000"}
+api-1  | 2026-11-11T06:19:27.636810955Z {"level":30,"time":1794377967634,"pid":1,"hostname":"a2b6bf9b095e","msg":"Server listening at http://172.20.0.6:3000"}
+redis-1  | 2026-11-11T06:19:19.291348356Z 1:C 11 Nov 2026 06:19:19.290 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis-1  | 2026-11-11T06:19:19.291465398Z 1:C 11 Nov 2026 06:19:19.290 * Redis version=7.4.12, bits=64, commit=00000000, modified=0, pid=1, just started
+redis-1  | 2026-11-11T06:19:19.291474498Z 1:C 11 Nov 2026 06:19:19.290 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis-1  | 2026-11-11T06:19:19.292548419Z 1:M 11 Nov 2026 06:19:19.291 * monotonic clock: POSIX clock_gettime
+redis-1  | 2026-11-11T06:19:19.294686102Z 1:M 11 Nov 2026 06:19:19.294 * Running mode=standalone, port=6379.
+redis-1  | 2026-11-11T06:19:19.295695611Z 1:M 11 Nov 2026 06:19:19.295 * Server initialized
+redis-1  | 2026-11-11T06:19:19.295736016Z 1:M 11 Nov 2026 06:19:19.295 * Ready to accept connections tcp
+db-1     | 2026-11-11T06:19:19.386598831Z The files belonging to this database system will be owned by user "postgres".
+db-1     | 2026-11-11T06:19:19.386685139Z This user must also own the server process.
+db-1     | 2026-11-11T06:19:19.386692745Z 
+db-1     | 2026-11-11T06:19:19.386697719Z The database cluster will be initialized with locale "en_US.utf8".
+db-1     | 2026-11-11T06:19:19.386703554Z The default database encoding has accordingly been set to "UTF8".
+db-1     | 2026-11-11T06:19:19.386708906Z The default text search configuration will be set to "english".
+db-1     | 2026-11-11T06:19:19.386714146Z 
+db-1     | 2026-11-11T06:19:19.386719037Z Data page checksums are disabled.
+db-1     | 2026-11-11T06:19:19.386736592Z 
+db-1     | 2026-11-11T06:19:19.386968967Z fixing permissions on existing directory /var/lib/postgresql/data ... ok
+db-1     | 2026-11-11T06:19:19.392386127Z creating subdirectories ... ok
+db-1     | 2026-11-11T06:19:19.392789854Z selecting dynamic shared memory implementation ... posix
+db-1     | 2026-11-11T06:19:19.425419799Z selecting default max_connections ... 100
+db-1     | 2026-11-11T06:19:19.475819096Z selecting default shared_buffers ... 128MB
+db-1     | 2026-11-11T06:19:19.551904888Z selecting default time zone ... UTC
+db-1     | 2026-11-11T06:19:19.553489815Z creating configuration files ... ok
+db-1     | 2026-11-11T06:19:19.838568544Z running bootstrap script ... ok
+db-1     | 2026-11-11T06:19:20.411911352Z sh: locale: not found
+db-1     | 2026-11-11T06:19:20.412105493Z 2026-11-11 06:19:20.411 UTC [35] WARNING:  no usable system locales were found
+db-1     | 2026-11-11T06:19:21.034037831Z performing post-bootstrap initialization ... ok
+db-1     | 2026-11-11T06:19:21.163561710Z initdb: warning: enabling "trust" authentication for local connections
+db-1     | 2026-11-11T06:19:21.163626881Z initdb: hint: You can change this by editing pg_hba.conf or using the option -A, or --auth-local and --auth-host, the next time you run initdb.
+db-1     | 2026-11-11T06:19:21.163646077Z syncing data to disk ... ok
+db-1     | 2026-11-11T06:19:21.163648787Z 
+db-1     | 2026-11-11T06:19:21.163650913Z 
+db-1     | 2026-11-11T06:19:21.163653046Z Success. You can now start the database server using:
+db-1     | 2026-11-11T06:19:21.163655434Z 
+db-1     | 2026-11-11T06:19:21.163657524Z     pg_ctl -D /var/lib/postgresql/data -l logfile start
+db-1     | 2026-11-11T06:19:21.163659887Z 
+db-1     | 2026-11-11T06:19:21.247606932Z waiting for server to start....2026-11-11 06:19:21.247 UTC [41] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1     | 2026-11-11T06:19:21.252027482Z 2026-11-11 06:19:21.251 UTC [41] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-11-11T06:19:21.265025713Z 2026-11-11 06:19:21.264 UTC [44] LOG:  database system was shut down at 2026-11-11 06:19:21 UTC
+db-1     | 2026-11-11T06:19:21.277924293Z 2026-11-11 06:19:21.277 UTC [41] LOG:  database system is ready to accept connections
+db-1     | 2026-11-11T06:19:21.304493756Z  done
+db-1     | 2026-11-11T06:19:21.304541352Z server started
+db-1     | 2026-11-11T06:19:21.423584069Z CREATE DATABASE
+db-1     | 2026-11-11T06:19:21.424900987Z 
+db-1     | 2026-11-11T06:19:21.424943257Z 
+db-1     | 2026-11-11T06:19:21.425029584Z /usr/local/bin/docker-entrypoint.sh: ignoring /docker-entrypoint-initdb.d/*
+db-1     | 2026-11-11T06:19:21.425035881Z 
+db-1     | 2026-11-11T06:19:21.427180977Z waiting for server to shut down....2026-11-11 06:19:21.426 UTC [41] LOG:  received fast shutdown request
+db-1     | 2026-11-11T06:19:21.431008854Z 2026-11-11 06:19:21.430 UTC [41] LOG:  aborting any active transactions
+db-1     | 2026-11-11T06:19:21.436113568Z 2026-11-11 06:19:21.435 UTC [41] LOG:  background worker "logical replication launcher" (PID 47) exited with exit code 1
+db-1     | 2026-11-11T06:19:21.436657880Z 2026-11-11 06:19:21.436 UTC [42] LOG:  shutting down
+db-1     | 2026-11-11T06:19:21.440618009Z 2026-11-11 06:19:21.440 UTC [42] LOG:  checkpoint starting: shutdown immediate
+db-1     | 2026-11-11T06:19:21.516014298Z 2026-11-11 06:19:21.515 UTC [42] LOG:  checkpoint complete: wrote 926 buffers (5.7%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.037 s, sync=0.026 s, total=0.080 s; sync files=301, longest=0.009 s, average=0.001 s; distance=4283 kB, estimate=4283 kB; lsn=0/1925D58, redo lsn=0/1925D58
+db-1     | 2026-11-11T06:19:21.526701002Z 2026-11-11 06:19:21.526 UTC [41] LOG:  database system is shut down
+db-1     | 2026-11-11T06:19:21.528362366Z  done
+db-1     | 2026-11-11T06:19:21.528392554Z server stopped
+db-1     | 2026-11-11T06:19:21.529973577Z 
+db-1     | 2026-11-11T06:19:21.529996304Z PostgreSQL init process complete; ready for start up.
+db-1     | 2026-11-11T06:19:21.530005215Z 
+db-1     | 2026-11-11T06:19:21.567129683Z 2026-11-11 06:19:21.566 UTC [1] LOG:  starting PostgreSQL 16.15 on x86_64-pc-linux-musl, compiled by gcc (Alpine 15.2.0) 15.2.0, 64-bit
+db-1     | 2026-11-11T06:19:21.567165304Z 2026-11-11 06:19:21.566 UTC [1] LOG:  listening on IPv4 address "0.0.0.0", port 5432
+db-1     | 2026-11-11T06:19:21.567169953Z 2026-11-11 06:19:21.566 UTC [1] LOG:  listening on IPv6 address "::", port 5432
+db-1     | 2026-11-11T06:19:21.576099292Z 2026-11-11 06:19:21.575 UTC [1] LOG:  listening on Unix socket "/var/run/postgresql/.s.PGSQL.5432"
+db-1     | 2026-11-11T06:19:21.586836219Z 2026-11-11 06:19:21.586 UTC [57] LOG:  database system was shut down at 2026-11-11 06:19:21 UTC
+db-1     | 2026-11-11T06:19:21.597665707Z 2026-11-11 06:19:21.597 UTC [1] LOG:  database system is ready to accept connections

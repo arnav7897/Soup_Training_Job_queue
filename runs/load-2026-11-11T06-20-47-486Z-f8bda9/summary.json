@@ -1,0 +1,49 @@
+{
+  "run": "load-2026-11-11T06-20-47-486Z-f8bda9",
+  "seed": 1,
+  "project": "soupload37d04c41418c",
+  "seconds": 600,
+  "targetRps": 100,
+  "status": "failed",
+  "startedAt": "2026-11-11T06:20:47.491Z",
+  "errors": [],
+  "limits": [
+    "Workload uses simulated 20ms jobs, 70% creates, 20% reads, 10% cancels; target distribution may differ while no IDs exist.",
+    "Seed fixes operation choices; request completion order and selected job IDs depend on scheduling.",
+    "Outbox lag flatness needs inspection of the retained samples; there is no PRD numeric threshold."
+  ],
+  "results": {
+    "plannedRequests": 60000,
+    "sent": 60000,
+    "succeeded": 60000,
+    "dropped": 0,
+    "sendingSeconds": 599.9901860729999,
+    "actualRps": 100.00163568125411,
+    "p50Ms": 13.648917999991681,
+    "p99Ms": 1027.246146000005,
+    "atEnd": {
+      "queued": 0,
+      "running": 3,
+      "outboxPending": 71886,
+      "outboxAge": 340.966061
+    },
+    "final": {
+      "queued": 0,
+      "running": 0,
+      "outboxPending": 60049,
+      "outboxAge": 404.541304
+    },
+    "drainSeconds": 121.74171557899996,
+    "sampleCount": 199,
+    "outboxAgeMaxSeconds": 404.541304
+  },
+  "checks": {
+    "allRequestsCompleted": true,
+    "p99Under200ms": false,
+    "reachedTargetRps": true,
+    "queueAndOutboxDrained": false,
+    "noErrors": true
+  },
+  "manualReview": "Assess outbox lag flatness and drain rate from retained samples before a ship verdict.",
+  "finishedAt": "2026-11-11T06:33:32.986Z"
+}
