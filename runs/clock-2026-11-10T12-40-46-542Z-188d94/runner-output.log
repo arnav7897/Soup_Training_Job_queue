@@ -1,0 +1,31 @@
+
+> training-job-queue@0.1.0 test:clock
+> node scripts/clock.cjs
+
+{
+  "run": "clock-2026-11-10T12-40-46-542Z-188d94",
+  "project": "soupclockcef4d397d17e",
+  "status": "passed",
+  "startedAt": "2026-11-10T12:40:46.546Z",
+  "errors": [],
+  "checks": {
+    "clockOffsetObserved": true,
+    "leaseUsesDatabaseClock": true,
+    "completedOnce": true
+  },
+  "observed": {
+    "offsetSeconds": 86399.958,
+    "during": {
+      "status": "running",
+      "remaining_seconds": 0.846042,
+      "attempts": 1
+    },
+    "final": {
+      "status": "succeeded",
+      "attempts": 1,
+      "effects": 1,
+      "expiries": 0
+    }
+  },
+  "finishedAt": "2026-11-10T12:42:47.784Z"
+}

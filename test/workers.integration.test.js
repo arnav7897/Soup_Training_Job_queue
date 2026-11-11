@@ -1,6 +1,7 @@
 const { Pool } = require('pg');
 const { randomUUID } = require('node:crypto');
 const { readFileSync } = require('node:fs');
+const { setTimeout: sleep } = require('node:timers/promises');
 const { claim, heartbeat, complete, reap } = require('../dist/queue');
 const { buildApp } = require('../dist/app');
 
@@ -19,6 +20,7 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
   try {
     await pool.query(readFileSync('migrations/001_initial.sql', 'utf8'));
     await pool.query(readFileSync('migrations/002_metrics.sql', 'utf8'));
+    await pool.query(readFileSync('migrations/003_commit_order_and_outbox_index.sql', 'utf8'));
     const id = await insert();
     const claims = (await Promise.all(Array.from({ length: 50 }, (_, i) => claim(pool, `w${i}`, 10000)))).filter(Boolean);
     expect(claims).toHaveLength(1);
@@ -67,6 +69,22 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     await pool.query('DELETE FROM effects WHERE job_id=$1', [rollbackId]);
     await app.inject({ method: 'POST', url: `/jobs/${rollbackId}/cancel` });
 
+    for (const action of ['heartbeat', 'complete']) {
+      const lockedId = await insert();
+      const lockedJob = await claim(pool, 'locked-worker', 500);
+      const lock = await pool.connect();
+      try {
+        await lock.query('BEGIN');
+        await lock.query('SELECT id FROM jobs WHERE id=$1 FOR UPDATE', [lockedId]);
+        const attempt = action === 'heartbeat' ? heartbeat(pool, lockedJob, 'locked-worker', 10000) : complete(pool, lockedJob, 'locked-worker');
+        await sleep(750);
+        await lock.query('COMMIT');
+        expect(await attempt).toBe(false);
+      } finally { lock.release(); }
+      await reap(pool);
+      const cleaned = await app.inject({ method: 'POST', url: `/jobs/${lockedId}/cancel` });
+      expect(cleaned.statusCode).toBe(200);
+    }
     await Promise.all(Array.from({ length: 200 }, () => insert()));
     const claimed = [];
     await Promise.all(Array.from({ length: 50 }, async (_, i) => {
@@ -89,7 +107,7 @@ test('concurrent claims, stale fences, cancellation and exhausted retries', asyn
     const response = await app.inject({ url: '/metrics' });
     expect(response.statusCode).toBe(200);
     expect(response.headers['content-type']).toContain('text/plain');
-    expect(response.body).toContain('queue_lease_expiries_total 2');
+    expect(response.body).toContain('queue_lease_expiries_total 4');
     const rejected = response.body.match(/queue_fence_rejections_total ([0-9]+)/);
     expect(Number(rejected?.[1])).toBeGreaterThanOrEqual(3);
     expect(response.body).toMatch(/queue_claims_total [0-9]+/);

@@ -1,0 +1,46 @@
+{
+  "run": "chaos-2026-11-10T12-10-25-663Z-98f5b0",
+  "seed": 2,
+  "requestedJobs": 10000,
+  "workerCount": 8,
+  "killLimit": 0,
+  "project": "soupchaosf18e57d4ddcb",
+  "status": "passed",
+  "startedAt": "2026-11-10T12:10:25.665Z",
+  "checks": {
+    "all_created_and_acknowledged": true,
+    "all_terminal": true,
+    "effects_match_states": true,
+    "legal_transitions": true,
+    "acknowledged_cancels_hold": true,
+    "no_client_or_fault_errors": true,
+    "requested_kills_exercised": true,
+    "stale_epoch_fenced": true,
+    "zombie_exercised": true
+  },
+  "errors": [],
+  "limits": [
+    "Seed controls inputs and fault choices; OS scheduling and interleavings are not deterministic.",
+    "Single-host run does not test database, Redis, disk or network failure, or external effects."
+  ],
+  "observed": {
+    "jobs": 10000,
+    "distinct_keys": 10000,
+    "unfinished": 0,
+    "bad_effects": 0,
+    "illegal_transitions": 0,
+    "missing_initial_events": 0,
+    "bad_cancels": 0,
+    "executions": 9516,
+    "duplicate_executions": 13,
+    "fence_rejections": 1,
+    "lease_expiries": 14,
+    "kills": 19,
+    "fenceProbe": {
+      "accepted": false,
+      "effects": 0,
+      "expected": "stale epoch rejected even if the worker ID matches"
+    }
+  },
+  "finishedAt": "2026-11-10T12:12:01.227Z"
+}

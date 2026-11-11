@@ -1,0 +1,11 @@
+{
+  "run": "clock-2026-11-11T06-19-09-182Z-dd133f",
+  "project": "soupclock16a33c2f361f",
+  "status": "failed",
+  "startedAt": "2026-11-11T06:19:09.188Z",
+  "errors": [
+    "TypeError: fetch failed"
+  ],
+  "checks": {},
+  "finishedAt": "2026-11-11T06:19:40.609Z"
+}

@@ -1,0 +1,44 @@
+
+> training-job-queue@0.1.0 chaos
+> node scripts/chaos.cjs
+
+{
+  "run": "chaos-2026-11-10T11-58-06-699Z-59975e",
+  "seed": 2,
+  "requestedJobs": 500,
+  "workerCount": 4,
+  "killLimit": 3,
+  "project": "soupchaose6ec07fa1c43",
+  "status": "passed",
+  "startedAt": "2026-11-10T11:58:06.701Z",
+  "checks": {
+    "all_created_and_acknowledged": true,
+    "all_terminal": true,
+    "effects_match_states": true,
+    "legal_transitions": true,
+    "acknowledged_cancels_hold": true,
+    "no_client_or_fault_errors": true,
+    "requested_kills_exercised": true,
+    "zombie_exercised": true
+  },
+  "errors": [],
+  "limits": [
+    "Seed controls inputs and fault choices; OS scheduling and interleavings are not deterministic.",
+    "Single-host run does not test database, Redis, disk or network failure, or external effects."
+  ],
+  "observed": {
+    "jobs": 500,
+    "distinct_keys": 500,
+    "unfinished": 0,
+    "bad_effects": 0,
+    "illegal_transitions": 0,
+    "missing_initial_events": 0,
+    "bad_cancels": 0,
+    "executions": 481,
+    "duplicate_executions": 4,
+    "fence_rejections": 1,
+    "lease_expiries": 4,
+    "kills": 3
+  },
+  "finishedAt": "2026-11-10T11:58:48.513Z"
+}

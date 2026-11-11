@@ -1,32 +1,38 @@
-# Design: training-job queue
+# Design: PostgreSQL Training-Job Queue
 
-Postgres owns job state, idempotency, leases, effects, execution records and the
-transactional outbox. Redis provides derived cache entries and a stream doorbell;
-workers fall back to polling when Redis is unavailable. Eight simulated workers
-are configured in Compose.
+## Goal
 
-A claim uses `FOR UPDATE SKIP LOCKED`, increments the lease epoch and records the
-execution in the same transaction as its outbox event. A heartbeat renews only a
-live lease. Completion requires the current owner, epoch, running state and an
-unexpired database-clock lease; it commits a unique effect and state transition
-together. Cancellation increments the epoch; the reaper requeues expired jobs or
-fails them after the attempt limit. Execution can repeat. Exactly-once effects are
-limited to the effect row inside Postgres, not external side effects.
+Accept jobs durably, run them across at least four workers, recover after worker death, and prove the system's behavior with failures rather than happy-path checks. Training is simulated by inserting a countable row.
 
-A relay publishes outbox events to Redis Streams at least once. An interrupted
-relay can publish duplicates; versioned invalidation tolerates repeats and out-of-
-order events. Status cache hits still check the current Postgres version, so a
-lost or delayed invalidation cannot make cached state authoritative. The stream
-and cache may be lost without losing jobs.
+## Architecture
 
-`/health` is process liveness. `/metrics` uses Postgres to expose job counts,
-committed claims, rejected completions, recovered expired leases, unpublished
-outbox count and the oldest unpublished event age. Counters added in phase 5
-start at zero on upgrade; claims are derived from execution records. Counter
-updates add database write contention. Metrics fail with 503 if Postgres is down.
+PostgreSQL is both the job store and the queue. The API validates requests and writes a job plus its idempotency key in one transaction. It acknowledges the request only after commit. Workers poll PostgreSQL and claim queued rows with `FOR UPDATE SKIP LOCKED`; each claim records owner, attempt, expiry, and a fencing number. A lease reaper returns expired work to the queue or fails it after the retry limit. PostgreSQL time is the only lease clock.
 
-Local integration tests exercise concurrency, cancellation races, stale workers,
-Redis failures and duplicate relay delivery. The required full seeded chaos runs,
-mutation check and 100-rps load evidence remain phase 6 work. No ship verdict is
-claimed. Postgres availability, network partitions, disk loss, external side
-effects and unbounded outbox/execution growth remain limitations.
+```mermaid
+flowchart LR
+  Client --> API[Fastify API]
+  API -->|durable create and idempotency| PG[(PostgreSQL)]
+  W[8 or more workers] -->|claim and heartbeat| PG
+  W -->|simulate work| Effect[Effect row]
+  Effect -->|same transaction as fenced success| PG
+  Reaper[Lease reaper] -->|expired work back to queued or failed| PG
+  Client -->|status, list, cancel| API
+```
+
+Completion updates a job only if it is still running under the same owner and fence. The effect row has a unique job ID and commits in that same transaction. Execution can happen more than once; a successful job has exactly one committed database effect. This guarantee does not cover external services.
+
+A queued job can be cancelled directly. For a running job, cancellation and completion compete through conditional database updates. If cancellation wins, it invalidates the worker fence and no effect commits. If completion wins, cancellation reports that the job is already terminal.
+
+## Why PostgreSQL only
+
+The required job state, retries, idempotency, lease, and test effect need durable transactions and constraints. One database can atomically commit a job or effect with its state. Redis and BullMQ are excluded because this assignment needs no cache or separate broker; buffering an acknowledged job before PostgreSQL commit would create a loss window. PostgreSQL `LISTEN/NOTIFY` may be considered later only as a wake-up hint, with polling retained as recovery.
+
+## Pagination and performance
+
+Use keyset pagination over `(created_at, id)` for a stable result set. The API does not promise a snapshot across separate page requests while concurrent inserts happen. Do not serialize all inserts through one timestamp row to create that stronger guarantee; it is outside the supplied task and may increase latency.
+
+The latest load run missed its 100 RPS performance/drain checks. Diagnose the timestamp-row lock and outbox relay separately before claiming either is the cause. A final p99 limit must be selected before the run; 200 ms is a proposed project target, not a target in the supplied assessment text.
+
+## Verification and limits
+
+Use unit and real-PostgreSQL integration tests, deterministic races, the 10,000-job/eight-worker kill harness, mutation of the fence, worker clock skew, and a 100 RPS load run. Retain all raw output, including failures. A single-host harness cannot prove behavior under database/disk loss, network partitions, all possible schedules, or duplicate external effects.

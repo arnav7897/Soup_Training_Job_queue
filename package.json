@@ -9,11 +9,18 @@
     "build": "tsc",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src test",
-    "test": "jest --runInBand --testPathIgnorePatterns=integration.test.js",
+    "test": "jest --runInBand --testPathIgnorePatterns='(integration|slow)\\.test\\.js'",
     "test:integration": "jest --runInBand --testMatch=**/*.integration.test.js --coverage --collectCoverageFrom=dist/queue.js --coverageReporters=text --coverageThreshold='{\"global\":{\"branches\":85,\"functions\":85,\"lines\":85,\"statements\":85}}'",
     "start": "node dist/server.js",
     "worker": "node dist/worker.js",
-    "migrate": "node dist/migrate.js"
+    "migrate": "node dist/migrate.js",
+    "chaos": "node scripts/chaos.cjs",
+    "load": "node scripts/load.cjs",
+    "chaos:mutation": "node scripts/mutation.cjs",
+    "chaos:batch": "node scripts/chaos-batch.cjs",
+    "test:chaos": "jest --runInBand --testMatch='**/*.slow.test.js'",
+    "test:clock": "node scripts/clock.cjs",
+    "test:isolation": "node scripts/isolation.cjs"
   },
   "dependencies": {
     "fastify": "^5.0.0",
