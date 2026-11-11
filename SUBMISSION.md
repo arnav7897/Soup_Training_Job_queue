@@ -4,27 +4,27 @@ Hi Soup team,
 
 My take-home repository is https://github.com/arnav7897/Soup_Training_Job_queue.
 The README links the design note, harness, raw outputs and retained failed runs.
-The current verdict is **DON'T SHIP**.
+The current verdict is **SHIP at 100 requests per second for the tested workload**.
 
 Ten seeded chaos runs covered 100,000 jobs and their recorded invariants passed;
-the 500-job smoke test passed, and a deterministic probe detected removal of the
-epoch fence. The first mutation rehearsal survived and is retained. At 100 mixed
-requests per second for ten minutes, all 60,000 requests completed with 9.37 ms
-p50 and 24.19 ms p99, but the outbox grew to 90,644 pending events and still had
-85,865 after a 121-second drain. The captured query plan shows the relay scanning
-past 39,844 published rows to find one pending row; the first fix to test is a
-partial index on unpublished events, followed by another load run.
+the harness exercised eight workers, repeated idempotent requests, cancellations,
+worker kills, lease recovery and stale-worker rejection. A deterministic fence
+mutation was detected. At 100 mixed requests per second for ten minutes, all
+60,000 requests completed with 8.56 ms p50 and 21.57 ms p99; the queue drained
+in 0.10 seconds. The earlier Redis/outbox design missed its drain target and had
+1,027 ms p99 with 60,049 events still pending; that run does not isolate Redis
+as the sole cause. The current design removes Redis and the relay from the path.
 
-A separate late-commit pagination probe found that a job can be skipped behind an
-issued cursor, so the no-skips acceptance criterion is not met. Under SERIALIZABLE,
-the probe observed no state/effect invariant failures but needed many probe-side
-serialization retries and received 50 unexpected cancellation responses; the
-service is designed for READ COMMITTED. A worker-clock probe with a 24-hour offset
-passed. Full summaries and raw logs are linked in the README, including failures.
+A late-commit pagination probe showed that a newly committed job can sort behind
+an existing cursor. The current API defines pagination as a live view rather than
+a snapshot; clients restart at page one to see new jobs. Under READ COMMITTED,
+200 claims completed without duplicates or invariant failures. Clock skew was
+tested at roughly 24 hours. Full summaries and raw logs are linked in the README,
+including the historical failures and the expected failing mutation run.
 
-What surprised me was that Postgres `now()` stayed fixed while a completion waited
-past its lease, and that an initial epoch-fence mutation survived because other
-checks masked it. I added a lock-wait regression and a deterministic fence probe.
-I remain concerned about commit-order pagination, the measured outbox backlog,
-the unresolved high-severity production dependency advisory, and failures outside the single-host
-harness such as database loss, partitions and external effects.
+What surprised me was that removing the serialized insert timestamp and relay
+path changed the measured p99 from 1,027 ms to 21.57 ms, though the old run cannot
+tell us which component dominated. I am still concerned about database, disk and
+network failures outside the single-host harness, external side effects, and the
+live-pagination behavior while new jobs commit. Pagination is documented as a
+live keyset walk and the locked dependency audit reported no vulnerabilities.

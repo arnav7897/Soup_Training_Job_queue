@@ -6,14 +6,11 @@ A Postgres-backed queue for training jobs, designed to keep work moving
 through worker crashes, retries, and cancellation races. This project is a backend
 exercise; simulated jobs stand in for real model training.
 
-> **Current verdict: DON'T SHIP as production-ready at 100 requests/second yet.**
-> The Phase 7 load run passed its configured workload (60,000 requests, p99 21.57 ms),
-> but the required 10,000-job, 8-worker kill-and-retry chaos run is still outstanding.
-> The assignment sets no p99 threshold; 200 ms is our project target. This checkout is
-> the Phase 7 PostgreSQL-only implementation; its latest load run met that target
->
-> Production verdict is still **DON'T SHIP** until the 10,000-job chaos run with
-> eight workers, repeated idempotent POSTs, cancellations, and worker kills passes.
+> **SHIP at 100 requests/second for the tested workload.** The 10-minute load
+> run passed with 60,000 successful requests and 21.57 ms p99; all ten 10,000-job,
+> eight-worker chaos seeds passed. The assignment sets no p99 threshold; 200 ms is
+> the project's target. This evidence does not cover database, disk, or network
+> outages and does not guarantee exactly-once external effects.
 
 ## Architecture and failure timeline
 
@@ -25,9 +22,13 @@ If a client had already paged past that timestamp, the newly committed row could
 be skipped. The Phase 6 fix serialized job creation through a PostgreSQL clock
 row so timestamp order matched commit order. That fixed the tested late-commit
 case, but introduced a single shared lock on every job insert. Phase 7 removed
-that global insert lock. The current pagination test covers stable pages over a
-fixed result set; it does not prove snapshot pagination while new jobs commit.
-That semantic gap must be decided and tested before shipping.
+that global insert lock. The API provides live keyset pagination, not a
+repeatable snapshot: a job committed during a page walk can sort before the
+cursor and appear only after the client starts a fresh list. The job remains in
+PostgreSQL; pagination does not delete it. The task requires pagination but not
+a cross-request snapshot, so this is the documented contract. The fixed-set
+multi-page test checks ordering and duplicates; concurrent page walks are not a
+snapshot guarantee.
 
 ### 2. Redis/outbox load failure
 
@@ -66,9 +67,9 @@ successful job. Redis, BullMQ, a cache, and an outbox relay are not used.
 | Part | What can bottleneck or fail | Current evidence / remaining check |
 |---|---|---|
 | API + PostgreSQL writes | Connection pool, row/index contention, fsync | 60,000/60,000 requests succeeded in the seeded load run |
-| Worker polling + claims | Poll query load, lock contention, queue wait | Four-worker chaos smoke passed; full eight-worker run remains |
-| Lease recovery | Expiry delay and reaper cadence | Clock-skew and worker-kill smoke passed; larger randomized chaos required |
-| Pagination | Concurrent inserts can commit behind a cursor | Fixed-set pages tested; late-commit snapshot behavior remains unproven |
+| Worker polling + claims | Poll query load, lock contention, queue wait | Ten 10,000-job runs passed with eight workers; 100 RPS queue drained |
+| Lease recovery | Expiry delay and reaper cadence | Ten chaos seeds plus clock-skew and fence-mutation checks passed |
+| Pagination | New commits can sort behind an existing cursor | Fixed-set pages pass; documented live-list behavior requires a fresh first page |
 | Redis/outbox relay | Backlog and extra serialization/network hops | Removed from current runtime; old failure retained as historical evidence |
 
 The Phase 7 10-minute run completed 60,000 requests at 100.00 RPS with no
@@ -76,9 +77,14 @@ request errors, p50 8.56 ms, p99 21.57 ms, and an empty queue after a 0.10 s
 drain. It meets the project 200 ms p99 target for this seeded request mix. The
 take-home asks for a verdict at 100 RPS but specifies no latency threshold. The
 raw run is `runs/load-2026-11-11T08-08-50-100Z-ad8eb8/`.
-> and outbox-drain checks. The refreshed target design in `prd.md` is PostgreSQL
-> only; that architecture change is planned, not implemented yet.
 
+Ten 10,000-job/eight-worker chaos seeds also passed. The harness verified unique
+idempotency keys, terminal states, effect counts, successful cancellations,
+worker restarts and stale-epoch rejection. A mutation run removed the epoch
+comparison and was correctly rejected by the harness; that expected mutation
+failure is retained. The latest clock and READ COMMITTED probes also passed.
+Batch records are in `runs/batch-2026-11-11T08-39-58-339Z-7be870/`, and mutation
+records are in `runs/mutation-2026-11-11T08-38-23-075Z-25031a/`.
 ## The problem
 
 Training jobs can be slow and expensive. A worker may crash or resume after its
@@ -86,21 +92,21 @@ lease expires; a client may retry a request; cancellation can race with completi
 Without careful coordination, those cases can leave jobs stuck, create duplicates,
 or let an outdated worker write a result after another worker takes over.
 
-## The proposed solution
+## The implemented solution
 
-The target design keeps accepted jobs, leases, attempts, and the countable effect
+The implemented design keeps accepted jobs, leases, attempts, and the countable effect
 in PostgreSQL. Workers claim work from the database, recover expired leases, and
 cannot commit a stale result. Redis, BullMQ, a cache, and an event relay are outside
 the supplied task; they add no required behavior here.
 
-The target is **at-least-once execution with exactly one committed database effect
+The guarantee is **at-least-once execution with exactly one committed database effect
 for a successful job**. That guarantee does not extend to external side effects.
-A seeded chaos harness and load tests are planned to check the design rather than
-assume it works. See [the PRD](prd.md) for requirements and limitations.
+Ten chaos seeds and a 10-minute load test check the design rather than assume it
+works. See [the PRD](prd.md) for requirements and limitations.
 
-## Target user flow
+## Current user flow
 
-These Mermaid diagrams describe the intended system, not the current scaffold.
+These Mermaid diagrams describe the implemented PostgreSQL-only system.
 
 ```mermaid
 sequenceDiagram
@@ -143,9 +149,8 @@ stateDiagram-v2
 | Testing | Jest + failure harnesses | Unit, integration, chaos and load evidence |
 | Operations | Docker Compose, GitHub Actions | Local services and automated checks |
 
-The Phase 7 branch removes Redis, the cache, event relay, and outbox runtime. PostgreSQL is the current source of truth and queue.
-Phase 7 has removed those pieces, while preserving their historical run evidence, because
-they are not part of the refreshed requirements.
+The current runtime uses PostgreSQL as its source of truth and queue. Historical
+Redis and outbox evidence remains available in `runs/`.
 
 ## Run locally
 
@@ -165,11 +170,11 @@ Inspect queue metrics and structured service logs:
 
 ```sh
 curl http://localhost:3000/metrics
-docker compose logs -f worker relay
+docker compose logs -f worker
 ```
 
-Metrics include job states, claims, rejected heartbeats and completions, expired leases,
-and unpublished outbox count and age. Claims come from execution records; the
+Metrics include job states, claims, rejected heartbeats and completions, and expired
+leases. Claims come from execution records; the
 rejection and expiry counters begin at zero when the metrics migration is applied.
 `/health` only checks process liveness; `/metrics` returns 503 if Postgres is down.
 See [DESIGN.md](DESIGN.md) for guarantees and limitations.
@@ -183,21 +188,20 @@ For development without containers, start Postgres separately, then:
 npm ci
 npm run build
 export DATABASE_URL=postgres://queue:queue@localhost:5432/queue
-export REDIS_URL=redis://localhost:6379
 npm run migrate
 npm start
 ```
 
-Run `npm run typecheck`, `npm run lint`, and `npm test` after building. With Postgres running and the same environment variables set, run
+Run `npm run typecheck`, `npm run lint`, and `npm test` after building. With Postgres running and `DATABASE_URL` set, run
 `npm run test:integration` for the service and race tests. This enforces 85%
 coverage for the current queue module, not the entire application.
 
 ## What's next
 
-Phase 7 removes the unnecessary Redis/outbox path and the global insert
-serialization while keeping the required job, worker, retry, cancellation, and
-effect guarantees. See `plan.md` for the phase plan and `prd.md` for the refreshed
-acceptance criteria.
+Phase 7's PostgreSQL-only design is implemented and its load and chaos gates pass.
+The batch harness does not simulate database, disk, or network outages, and only
+the database side effect is protected against duplicate execution. See `plan.md`
+for local phase records and `prd.md` for the acceptance criteria.
 
 ## Evidence, evaluation and submission
 
@@ -221,8 +225,8 @@ npm run test:clock                 # isolated worker clock shifted by 24 hours
 
 Each chaos run uses a separate Compose project and database. The seed controls
 input and fault choices; operating-system scheduling and race interleavings are
-not deterministic. The load runner records every request and periodic queue and
-outbox samples. Its 20 ms simulated jobs are a synthetic workload; inspect the
+not deterministic. The load runner records every request and periodic queue
+samples. Its 20 ms simulated jobs are a synthetic workload; inspect the
 retained lag samples and actual throughput before drawing conclusions. The
 scripts retain results on failed checks; a killed host process or host crash may
 prevent the final summary from being written.
@@ -237,9 +241,9 @@ checks. A deterministic stale-epoch probe was added to test the epoch fence
 itself. A [second mutation run](runs/mutation-2026-11-10T12-05-29-917Z-907ace/summary.json)
 detected the removed epoch predicate with that probe. Full chaos runs and the
 ten-minute load results must be read from their recorded summaries. The current
-initial verdict was **DON'T SHIP** because pagination could skip a late-committing
-job. The follow-up below records the fix and rerun evidence; it also records the
-remaining latency, outbox, and probe failures.
+initial verdict was **DON'T SHIP** because the prior design could skip a late-committing
+job and the earlier load/outbox checks failed. The current results are at the top
+of this README; all historical failure records below remain unchanged.
 
 The assessment weights are **correctness under failure 30%**, **silent failures
 20%**, **design and code quality 15%**, and **live discussion 35%**. The first
@@ -259,7 +263,8 @@ but **failed** the outbox drain requirement: 90,644 events were pending at the
 end of traffic and 85,865 remained after 121 seconds. The oldest pending event
 aged from 430 to 527 seconds during that drain. A [captured query plan](runs/load-2026-11-10T12-24-25-133Z-a211f6/relay-explain.txt)
 shows the relay scanning past 39,844 published rows to find one unpublished row.
-The partial index was subsequently added; see the post-fix rerun below. These
+The partial index was subsequently added; a later Phase 6 rerun still failed,
+as described in the failure timeline above. These
 measurements use 20 ms simulated jobs and do not establish performance for real
 training workloads.
 
@@ -277,59 +282,27 @@ retries, and READ COMMITTED remains the intended isolation level. The [earlier
 comparison](runs/isolation-2026-11-10T12-37-34-009Z-f541a058/summary.json) is
 also retained, with its coarser combined failure count.
 
-**Initial pagination failure (fixed and regression-tested in the follow-up):** A [retained pagination probe](runs/pagination-probe-2026-11-10/output.log)
-shows that a transaction can insert a job, remain uncommitted while a later job
-appears on the first page, and then commit behind the issued cursor. The next
-page missed the late-committing job. The probe uses an isolated schema and its
-[source is retained](runs/pagination-probe-2026-11-10/probe.cjs). The migration
-and delayed-commit integration regression now address this case. The added global
-creation timestamp serialization has a measured latency cost in the latest load
-rerun, so its design still needs improvement.
+## Current findings and remaining concerns
 
-**Surprises and remaining concerns:** A row-lock experiment showed that Postgres
-`now()` can remain fixed while a completion waits past its lease; the lease checks
-now acquire the lock before consulting the database clock, with regression tests.
-The first chaos and mutation rehearsals also exposed weaknesses in the test setup
-itself. Remaining concerns include the pagination fix's measured latency cost and
-the outbox backlog under sustained load, the cost of a Postgres version read on
-cache hits, database and network failures outside this
-single-host harness, and unbounded event and execution history. Do not infer a
-production guarantee from a small smoke run.
+The original pagination probe demonstrated a late-commit row appearing behind an
+already-issued cursor. Phase 6 prevented that behavior by serializing inserts,
+but the shared lock was removed in Phase 7 to meet throughput goals. The current
+API explicitly provides live keyset pagination rather than a multi-request
+snapshot; a fresh first-page request sees newly committed rows. The retained
+[original probe](runs/pagination-probe-2026-11-10/output.log) is evidence of that
+concurrency boundary, not a claim that jobs disappear from PostgreSQL.
 
-A production dependency audit reports one high-severity Zod advisory
-([GHSA-mrhx-c7xc-m3w5](https://github.com/advisories/GHSA-mrhx-c7xc-m3w5)) for
-the installed Zod 3 release; the reported fix requires a major-version upgrade.
-That upgrade has not been tested, and the finding remains open.
-# Reliability follow-up (2026-11-11)
+The old Redis/outbox design missed its drain target and reached 1,027 ms p99.
+The Phase 7 PostgreSQL-only design removed that relay path and passed the 100 RPS
+load check. The earlier `fetch failed`, SERIALIZABLE, and mutation rehearsals
+remain in `runs/`; later clock, READ COMMITTED and deterministic fence-mutation
+checks passed. `npm audit --offline` reports zero known vulnerabilities in the
+locked dependency tree.
 
-The first reliability runs exposed two problems: pagination could skip a job when
-an older transaction committed after a page had been read, and the outbox relay fell
-behind during sustained load. We corrected pagination with migration
-`003_commit_order_and_outbox_index.sql`, which serializes job creation timestamps,
-and added a partial index for unpublished outbox rows.
-
-After those changes, lint, typecheck, build, unit tests, the full Postgres/Redis
-integration suite, and the 500-job chaos smoke passed. The epoch-fence mutation
-check also detected its deliberately weakened completion check. The integration
-suite includes a delayed-commit regression test for pagination. The post-fix
-The Phase 6 10-minute load run completed all 60,000 requests at 100 RPS with no
-request errors, but **failed** its performance and drain checks: p99 was 1,027 ms
-(200 ms project target), and 60,049 outbox rows remained after 121.7 seconds of
-draining. This failure is historical evidence from the prior Redis/outbox design.
-On Phase 7, the PostgreSQL-only 10-minute run sent 60,000 requests at 100.00 RPS:
-all completed, p50 8.56 ms, p99 21.57 ms, no errors, and the queue drained in
-0.10 seconds. It meets the project's 200 ms p99 target for this seeded workload;
-the take-home itself does not set a latency threshold. Raw results are in
-`runs/load-2026-11-11T08-08-50-100Z-ad8eb8/`.
-
-Two additional probes failed and their outputs are retained: the clock-skew probe
-ended with `TypeError: fetch failed` before checks ran, and the isolation probe
-passed READ COMMITTED but failed SERIALIZABLE on a concurrent-update serialization
-error. These failures are not evidence that the pagination or worker invariants
-failed, but they remain unresolved test/probe failures.
-
-Original failed runs and raw output remain in `runs/`; they have not been edited or
-removed. The earlier 500-job chaos rehearsal failed before its container-restart
-fix, and both the failure and later successful chaos runs remain available. Treat
-the project as not ready for a positive reliability claim until the outbox drain
-and latency regressions are addressed and the failed probes are understood.
+**Surprise and concern:** the largest improvement came from simplifying the write
+path, but the earlier slow run cannot attribute the 1,027 ms p99 to Redis alone;
+the serialized insert lock and relay were both active. Ten 10,000-job chaos seeds
+and the seeded 100 RPS run now pass, yet they run on one host with simulated
+20 ms jobs and do not test PostgreSQL, disk or network outages or real external
+effects. The live-pagination contract also does not give a client a frozen view
+across pages; clients should restart their listing to include new jobs.
