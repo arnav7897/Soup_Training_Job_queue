@@ -1,0 +1,44 @@
+{
+  "run": "load-2026-11-11T08-08-50-100Z-ad8eb8",
+  "seed": 1,
+  "project": "souploadcd034d5cdd28",
+  "seconds": 600,
+  "targetRps": 100,
+  "status": "requires_review",
+  "startedAt": "2026-11-11T08:08:50.107Z",
+  "errors": [],
+  "limits": [
+    "Workload uses simulated 20ms jobs, 70% creates, 20% reads, 10% cancels; target distribution may differ while no IDs exist.",
+    "Seed fixes operation choices; request completion order and selected job IDs depend on scheduling.",
+    "The assessment specifies 100 requests/second but no latency limit; the 200 ms p99 check is a project target."
+  ],
+  "results": {
+    "plannedRequests": 60000,
+    "sent": 60000,
+    "succeeded": 60000,
+    "dropped": 0,
+    "sendingSeconds": 599.9896739630001,
+    "actualRps": 100.00172103578578,
+    "p50Ms": 8.55609899997944,
+    "p99Ms": 21.565237000002526,
+    "atEnd": {
+      "queued": 1,
+      "running": 3
+    },
+    "final": {
+      "queued": 0,
+      "running": 0
+    },
+    "drainSeconds": 0.09505735000001732,
+    "sampleCount": 122
+  },
+  "checks": {
+    "allRequestsCompleted": true,
+    "p99Under200ms": true,
+    "reachedTargetRps": true,
+    "queueDrained": true,
+    "noErrors": true
+  },
+  "manualReview": "Review latency distribution and queue drain against the project target before a ship verdict.",
+  "finishedAt": "2026-11-11T08:19:21.939Z"
+}

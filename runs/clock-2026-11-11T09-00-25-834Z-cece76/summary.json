@@ -1,0 +1,27 @@
+{
+  "run": "clock-2026-11-11T09-00-25-834Z-cece76",
+  "project": "soupclockd939ee43a9a8",
+  "status": "passed",
+  "startedAt": "2026-11-11T09:00:25.841Z",
+  "errors": [],
+  "checks": {
+    "clockOffsetObserved": true,
+    "leaseUsesDatabaseClock": true,
+    "completedOnce": true
+  },
+  "observed": {
+    "offsetSeconds": 86399.963,
+    "during": {
+      "status": "running",
+      "remaining_seconds": 1.130404,
+      "attempts": 1
+    },
+    "final": {
+      "status": "succeeded",
+      "attempts": 1,
+      "effects": 1,
+      "expiries": 0
+    }
+  },
+  "finishedAt": "2026-11-11T09:00:57.016Z"
+}

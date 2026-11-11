@@ -1,0 +1,23 @@
+{
+  "startedAt": "2026-11-11T08:08:22.476Z",
+  "note": "The service uses READ COMMITTED. SERIALIZABLE is not an application-supported mode and is not included in this probe.",
+  "results": {
+    "read_committed": {
+      "claims": 200,
+      "retries": 0,
+      "serializationFailures": 0,
+      "deadlocks": 0,
+      "attempts": 550,
+      "errors": [],
+      "invariantFailures": 0,
+      "responseFailures": 0,
+      "duplicateClaims": 0,
+      "isolation": "read committed",
+      "unfinished": 0,
+      "retryRate": 0,
+      "status": "passed"
+    }
+  },
+  "status": "passed",
+  "finishedAt": "2026-11-11T08:08:25.154Z"
+}

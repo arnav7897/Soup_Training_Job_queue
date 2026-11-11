@@ -1,0 +1,50 @@
+{
+  "run": "mutation-2026-11-11T08-38-23-075Z-25031a",
+  "status": "mutation_detected",
+  "mutation": "Remove the epoch comparison from completion only; owner, status, expiry, and unique-effect protections remain.",
+  "error": null,
+  "harnessExit": 1,
+  "harnessSummary": {
+    "run": "chaos-2026-11-11T08-38-23-147Z-0c6025",
+    "seed": 1,
+    "requestedJobs": 10000,
+    "workerCount": 8,
+    "killLimit": 0,
+    "project": "soupchaosf21f41c1a8fc",
+    "status": "failed",
+    "startedAt": "2026-11-11T08:38:23.151Z",
+    "checks": {
+      "all_created_and_acknowledged": true,
+      "all_terminal": true,
+      "effects_match_states": true,
+      "acknowledged_cancels_hold": true,
+      "no_client_or_fault_errors": true,
+      "requested_kills_exercised": true,
+      "stale_epoch_fenced": false,
+      "zombie_exercised": true
+    },
+    "errors": [],
+    "limits": [
+      "Seed controls inputs and fault choices; OS scheduling and interleavings are not deterministic.",
+      "Single-host run does not test database, disk or network failure, or external effects."
+    ],
+    "observed": {
+      "jobs": 10000,
+      "distinct_keys": 10000,
+      "unfinished": 0,
+      "bad_effects": 0,
+      "bad_cancels": 0,
+      "executions": 9511,
+      "duplicate_executions": 12,
+      "fence_rejections": 1,
+      "lease_expiries": 12,
+      "kills": 15,
+      "fenceProbe": {
+        "accepted": true,
+        "effects": 1,
+        "expected": "stale epoch rejected even if the worker ID matches"
+      }
+    },
+    "finishedAt": "2026-11-11T08:39:48.586Z"
+  }
+}
